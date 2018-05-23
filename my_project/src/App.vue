@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="app">
     	<router-view/>
     	<z-tabbar></z-tabbar>
     </div>
@@ -16,5 +16,7 @@ export default {
 </script>
 
 <style>
-
+	#app{
+		height: 100%;
+	}
 </style>

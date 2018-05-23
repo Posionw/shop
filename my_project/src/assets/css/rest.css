@@ -7,5 +7,6 @@ a{font:12px Arial;text-decoration:none;color:#404040;cursor:pointer;}
 a:hover{text-decoration:underline;color:#FF3300} 
 h1{font-size:16px;font-weight:600;color:#666} .left{float:left} .right{float:right} .clear{clear:both}
 i{font-style: normal;}
-html{font-size: 50px;}
+html{font-size: 50px;height: 100%;width: 100%;}
+body{height: 100%}
 input{border:none;}
