@@ -1,94 +1,68 @@
 <template>
-		<ul class="homeNav">
-	        <li v-for="(item,index) in navbar"
-	        	:class="{active:item.id == tabIndex}"
-	        	@click="selectSort(item.id)"
-	            :key="index" class="navBarLi">
-		        	{{item.text}}
-	        </li>
-	    </ul>
+		<ul class="homeNav" ref="homeNav">
+      <li v-for="(item,index) in navbar"
+      	:class="{active:item.id == tabIndex}"
+      	@click="selectSort(item.id,index)"
+          :key="index" class="navBarLi">
+        	{{item.text}}
+      </li>
+	  </ul>
 </template>
 <script>
+	import axios from 'axios'
+	import { mapState,mapMutations } from 'vuex'
 	export default{
 		name:'index-header',
 		data() {
 	      return {
 	      	tabIndex:'0',
-	        navbar: [{
-	        		id:'0',
-                    text: '推荐',
-                    url: '/home/all',
-                    type: '__all__'
-                },
-                {
-                	id:'1',
-                    text: '热点',
-                    url: '/home/hot',
-                    type: 'news_hot'
-                },
-                {
-                	id:'2',
-                    text: '社会',
-                    url: '/home/society',
-                    type: 'news_society'
-                },
-                {
-                	id:'3',
-                    text: '娱乐',
-                    url: '/home/entertainment',
-                    type: 'news_entertainment'
-                },
-                {
-                	id:'4',
-                    text: '科技',
-                    url: '/home/tech',
-                    type: 'news_tech'
-                },
-                {
-                	id:'5',
-                    text: '汽车',
-                    url: '/home/car',
-                    type: 'news_car'
-                },
-                {
-                	id:'6',
-                    text: '体育',
-                    url: '/home/sports',
-                    type: 'news_sports'
-                },
-                {
-                	id:'7',
-                    text: '财经',
-                    url: '/home/finance',
-                    type: 'news_finance'
-                },
-                {
-                	id:'8',
-                    text: '军事',
-                    url: '/home/military',
-                    type: 'news_military'
-                },
-                {
-                	id:'9',
-                    text: '国际',
-                    url: '/home/world',
-                    type: 'news_world'
-                },
-                {
-                	id:'10',
-                    text: '时尚',
-                    url: '/home/fashion',
-                    type: 'news_fashion'
-                },
-            ],
+	      	s3_width:0,
+	      	scroll_left:0,
+	        navbar: [],
 	      }
 	    },
+	    computed:{
+		    ...mapState({
+		      tab:'tab'
+		    })
+		  },
 	    methods:{
-	    	selectSort(id){
+	    	...mapMutations(['changeTab']),
+	    	selectSort(id,index){
 	    		this.tabIndex=id;
-	    		console.log(id)
+	    		var crash_current=index
+	    		var s = 0;
+	    		if (crash_current != 0 && crash_current != 1 && crash_current != 2) {
+			      s = parseInt(crash_current - 1) * this.s3_width;
+			    }
+			    this.scroll_left=s
+			    this.$refs.homeNav.scrollTo(s, this.$refs.homeNav.scrollTop);
+			    this.changeTab(index)
+	    	},
+	    	getIndexData(){
+		      axios.get('/api/index.json')
+		  		  .then(this.handleGetDataSucc.bind(this))
+		  		  .catch(this.handleGetDataErr.bind(this))
+		  	},
+		  	handleGetDataSucc(res){
+		  		console.log(res)
+		  		this.navbar=res.data.navbar;
+		  	},
+		  	handleGetDataErr(){
+		  		console.log("失败了")
+		  	}
+	    },
+	    mounted(){
+	    	this.s3_width=document.documentElement.clientWidth/8;
+	    	this.getIndexData()
+	    	console.log(this.tab)
+	    },
+	     watch:{
+	     	tab(){
+	    		this.selectSort(1,this.tab)
+	    		this.tabIndex=this.tab
 	    	}
-	    }
+	     }
 	}
 </script>
 <style lang="stylus" scoped>
@@ -105,6 +79,7 @@
 	    white-space: nowrap;
 	    z-index: 999;
 	    height:0.46rem;
+	    transition: all 5s ease;
 	    .navBarLi {
 	        display: inline-block;
 	        height: 0.46rem;

@@ -3,9 +3,7 @@
 
 		<swiper :options="swiperOption" ref="mySwiper">
 	    <swiper-slide>
-	    	<div class="list_li">
-	    		I'm Slide 1
-	    	</div>
+	    	<list-li></list-li>
 	    </swiper-slide>
 	    <swiper-slide>
 	    	<div class="list_li">
@@ -22,32 +20,33 @@
 	</div>
 </template>
 <script>
+	import ListLi from './list_li.vue'
+	import { mapState,mapMutations } from 'vuex'
 	export default{
 		name:'index-list',
-		name: 'carrousel',
+		components:{
+			ListLi
+		},
 	    data() {
 	      return {
 	      	swiperIndex:0,
 	        swiperOption: {
-	          loop:true,
+	          // loop:true,
 	          pagination: {
 	            el: '.swiper-pagination'
 	          },
-	          autoplay: true,
 	          on:{
-			    touchEnd: function(event){
-			      console.log(this.activeIndex)
-			      this.swiperIndex=this.activeIndex
-			      console.log(this.swiperIndex)
-			    },
+			    touchEnd: (event)=>{
+			      this.swiperIndex=this.swiper.activeIndex
+			    }
 			  },
-	          onSlideChangeEnd: swiper => {  
-            		this.page = swiper.realIndex+1;
-               }
 	        },
 	      }
 	    },
 	    computed: {
+	      ...mapState({
+		      tab:'tab'
+		    }),
 	      swiper() {
 	        return this.$refs.mySwiper.swiper
 	      }
@@ -56,12 +55,21 @@
 	      // current swiper instance
 	      // 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
 	      console.log('this is current swiper instance object', this.swiper)
-	      this.swiper.slideTo(7, 1000, false)	      
+	      this.swiper.slideTo(this.tab, 1000, false)
+	      console.log(this.tab)
+	    },
+	    methods:{
+	    	...mapMutations(['changeTab']),
 	    },
 	    watch:{
-	    	swiperIndex(val, oldVal){
+	    	swiperIndex(){
 	    		console.log('变化了')
-	    		console.log("a: "+val, oldVal);
+	    		console.log(this.swiperIndex)
+	    		 this.changeTab(this.swiperIndex)
+	    	},
+	    	tab(){
+	    		this.swiper.slideTo(this.tab, 0, false)
+	    		console.log(this.tab)
 	    	}
 	    }
 	}
@@ -70,7 +78,7 @@
 	.product_list
 		flex:1;
 		width: 100%;
-		background:pink;
+		// background:pink;
 		margin-top: 0.46rem;
 		.swiper-slide
 			height:5.7rem;
