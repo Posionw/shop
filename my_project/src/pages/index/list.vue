@@ -6,9 +6,7 @@
 	    	<list-li></list-li>
 	    </swiper-slide>
 	    <swiper-slide>
-	    	<div class="list_li">
-	    		I'm Slide 2
-	    	</div>
+	    	<list-li></list-li>
 	    </swiper-slide>
 	    <swiper-slide>I'm Slide 3</swiper-slide>
 	    <swiper-slide>I'm Slide 4</swiper-slide>

@@ -1,5 +1,5 @@
 <template>
-	<a class="m-tabbar-item" :class="{'is-active':isActive}" @click="$parent.$emit('input',id)">
+	<a class="m-tabbar-item" :class="{'is-active':isActive}" @click="$parent.$parent.$emit('input',id)">
 		<span class="m-tabbar-item-icon" v-show="!isActive">
 			<slot name="icon-normal"></slot>
 		</span>
@@ -17,7 +17,7 @@
 		props: ['id'],
         computed: {
            isActive(){
-               if(this.$parent.value===this.id){
+               if(this.$parent.$parent.value===this.id){
                    return true;
                }
            }

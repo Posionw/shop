@@ -68,23 +68,28 @@
     "list":[{
                     "id":"1",
                     "title":"复古针织长款毛衣外套",
-                    "price":"235.00"
+                    "price":"235.00",
+                    "img":"@/assets/images/Group6@2x.png"
                 },{
                     "id":"2",
                     "title":"复古针织长款毛衣外套",
-                    "price":"235.00"
+                    "price":"235.00",
+                    "img":"@/assets/images/Group6@2x.png"
                 },{
                     "id":"3",
                     "title":"复古针织长款毛衣外套",
-                    "price":"235.00"
+                    "price":"235.00",
+                    "img":"@/assets/images/Group6@2x.png"
                 },{
                     "id":"4",
                     "title":"复古针织长款毛衣外套",
-                    "price":"235.00"
+                    "price":"235.00",
+                    "img":"@/assets/images/Group6@2x.png"
                 },{
                     "id":"5",
                     "title":"复古针织长款毛衣外套",
-                    "price":"235.00"
+                    "price":"235.00",
+                    "img":"@/assets/images/Group6@2x.png"
                 }]
 }
 

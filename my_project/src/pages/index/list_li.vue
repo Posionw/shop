@@ -1,15 +1,17 @@
 <template>
-	<div style="height:100vh;overflow: scroll;">
-		<mt-loadmore class="list" :top-method="loadTop" :bottom-method="loadBottom"  ref="loadmore">
-		  <ul>
-		    <li class="list_card" v-for="(item2,index) in 10" :key="index">
-		    	<div class="card_t">
-		    		<img src="@/assets/images/Group6@2x.png" alt="">
-		    	</div>
-		    	<div class="card_b">
-		    		<div class="card_title">w12321</div>
-		    		<div class="card_price">¥333</div>
-		    	</div>
+	<div style="height:5.7rem;overflow: scroll;">
+		<mt-loadmore  :top-method="loadTop" :autoFill="autoFill" :bottom-method="loadBottom"  ref="loadmore">
+		  <ul class="list">
+		    <li class="list_card" v-for="(item,index) in z_list" :key="index">
+		    	<router-link :to="'/Detail/'+item.id">
+			    	<div class="card_t">
+			    		<img src="@/assets/images/Group6@2x.png" alt="">
+			    	</div>
+			    	<div class="card_b">
+			    		<div class="card_title">{{item.title}}</div>
+			    		<div class="card_price">¥{{item.price}}</div>
+			    	</div>
+		    	</router-link>
 		    </li>
 		  </ul>
 		</mt-loadmore>
@@ -25,7 +27,10 @@
 		},
 		data(){
 			return{
-				z_list:[]
+				z_list:[],
+				autoFill:false,
+				autoLoaded:false,
+				page:1,
 			}
 		},
 		methods:{
@@ -34,20 +39,22 @@
 			  this.$refs.loadmore.onTopLoaded();
 			},
 			loadBottom() {
-			  // load more data
-			  // console.log('加载')
+			  this.page+=1
+			  this.getIndexData()
+			  console.log('加载')
 			  this.allLoaded = true;// if all data are loaded
 			  this.$refs.loadmore.onBottomLoaded();
 			},
 			getIndexData(){
-		      axios.get('/api/index_list.json')
+		      axios.get('/api/index.json?page='+this.page)
 		  		  .then(this.handleGetDataSucc.bind(this))
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
 		  		console.log(res)
-		  		this.z_list = res.data.list
+		  		// this.z_list = res.data.list
 		  		console.log(this.z_list)
+		  		this.z_list= res.data.list.concat(this.z_list)
 		  	},
 		  	handleGetDataErr(){
 		  		console.log("失败了")
@@ -60,6 +67,7 @@
 </script>
 <style lang="stylus" scoped>
 	.list
+		flex:1;
 		.list_card
 			height:4.3rem;
 			width: 3.38rem;

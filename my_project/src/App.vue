@@ -1,7 +1,7 @@
 <template>
 	<div class="app">
     	<router-view/>
-    	<z-tabbar></z-tabbar>
+    	<!-- <z-tabbar></z-tabbar> -->
     </div>
 
 </template>
