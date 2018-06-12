@@ -1,6 +1,5 @@
 export default {
 	changeTab(state,tab){
-  		// localStorage.city = city
   		state.tab= tab
   		console.log(tab)
   	},
@@ -13,16 +12,62 @@ export default {
   			state.num=0
   		}
   	},
-    add(state,id){
-      let record = state.added.find(n=>n.id == id);
+    // 添加购物车
+    add(state,goods){
+      console.log(goods)
+      let record = state.added.find(n=>n.goods.id == goods.id&&n.goods.size == goods.size && n.goods.picked == goods.picked);
+      console.log(record)
         if(!record){
           state.added.push({
-             id,
-             num:1
+             goods
           })
         }else{
-          record.num++
+          record.goods.num+=goods.num
         }
         console.log(state.added)
+    },
+    // 删除当前项
+    del(state,product){
+      console.log(product)
+      state.added.forEach((n,i)=>{
+          if(n.goods.id == product.goods.id&&n.goods.size == product.goods.size&& n.goods.picked == product.goods.picked){
+              //console.info(11,n)
+              //找到index的下标值
+              state.added.splice(i,1)
+          }
+      })
+    },
+    // 点击加号
+    carAdd(state,product){
+      state.added.forEach((n,i)=>{
+          if(n.goods.id == product.goods.id&&n.goods.size == product.goods.size&& n.goods.picked == product.goods.picked){
+              //console.info(11,n)
+              //找到index的下标值
+              n.goods.num+=1
+          }
+      })
+    },
+    // 点击减号
+    carJian(state,product){
+      state.added.forEach((n,i)=>{
+          if(n.goods.id == product.goods.id&&n.goods.size == product.goods.size&& n.goods.picked == product.goods.picked){
+              n.goods.num-=1
+              if(n.goods.num<=1){
+                n.goods.num=1
+                // state.added.splice(i,1)
+              }
+          }
+      })
     }
 }
+
+
+
+
+
+
+
+
+
+
+

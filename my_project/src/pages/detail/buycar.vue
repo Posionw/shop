@@ -10,19 +10,21 @@
 		  				<img src="@/assets/images/Group6@2x.png" alt="">
 		  			</div>
 		  			<div class="top_title">
-		  				<div class="top_title_t">复古针织长款毛衣外套</div>
-		  				<div class="top_price">¥235.00</div>
+		  				<div class="top_title_t">{{list.title}}</div>
+		  				<div class="top_price">¥{{list.price}}</div>
 		  			</div>
 		  		</div>
 		  		<div class="kuang_c">
 		  			<div class="select">
 		  				<div class="select_name">颜色</div>
 		  				<ul class="select_li">
-		  					<li :class="{active:'0'==selectIndex}" @click="handleSelect(0)">
-		  					冰灰
-		  						<input type="radio" v-model="picked" value="冰灰" name="a">
+		  					<li :class="{active:index==selectIndex}"
+		  					    @click="handleSelect(index)"
+								v-for="(item,index) in list.color">
+		  						{{item}}
+		  						<input type="radio" v-model="picked" :value="item" name="a">
 		  					</li>
-		  					<li :class="{active:'1'==selectIndex}" @click="handleSelect(1)">
+		  					<!-- <li :class="{active:'1'==selectIndex}" @click="handleSelect(1)">
 		  					蓝色
 		  						<input type="radio" v-model="picked" value="蓝色" name="a">
 		  					</li>
@@ -33,24 +35,26 @@
 		  					<li :class="{active:'3'==selectIndex}" @click="handleSelect(3)">
 		  					黄色
 		  						<input type="radio" v-model="picked" value="黄色" name="a">
-		  					</li>
+		  					</li> -->
 		  				</ul>
 		  			</div>
 		  			<div class="select">
 		  				<div class="select_name">尺码</div>
 		  				<ul class="select_li">
-		  					<li :class="{active:'0'==selectIndex2}" @click="handleSelect2(0)">
-		  					XS
-		  					<input type="radio" v-model="size" value="xs" name="b">
+		  					<li :class="{active:index==selectIndex2}"
+		  					    @click="handleSelect2(index)"
+		  					     v-for="(item,index) in list.size">
+		  						{{item}}
+		  						<input type="radio" v-model="size" :value="item" name="b">
 		  					</li>
-		  					<li :class="{active:'1'==selectIndex2}" @click="handleSelect2(1)">
+		  					<!-- <li :class="{active:'1'==selectIndex2}" @click="handleSelect2(1)">
 		  					S
 							<input type="radio" v-model="size" value="s" name="b">
 		  					</li>
 		  					<li :class="{active:'2'==selectIndex2}" @click="handleSelect2(2)">
 		  					L
 							<input type="radio" v-model="size" value="s" name="b">
-		  					</li>
+		  					</li> -->
 		  				</ul>
 		  			</div>
 		  		</div>
@@ -68,7 +72,7 @@
 		  				</div>
 		  			</div>
 		  		</div>
-		  		<div class="kuang_b" @click="buyNow(2)">
+		  		<div class="kuang_b" @click="buyNow()">
 		  			<div class="footer_l">
 						加入购物车
 					</div>
@@ -90,26 +94,34 @@
 	</div>
 </template>
 <script>
-	import { Popup } from 'mint-ui';
+	import { Popup,Toast } from 'mint-ui';
 	import { mapState,mapMutations } from 'vuex'
 	export default{
 		name:'detail-buycar',
 		components:{
-			Popup
+			Popup,
+			Toast
 		},
+		props:{
+    		list:{}
+    	},
 		data(){
 			return{
 				popupVisible:false,
-				picked:'灰色',
-				size:'s',
+				picked:'冰灰',
+				size:'xs',
 				selectIndex:0,
 				selectIndex2:0,
+				num:0
 			}
 		},
 		computed:{
-		    ...mapState({
-		      num:'num'
-		    })
+		    // ...mapState({
+		    //   num:'num'
+		    // }),
+		    goods(){
+		    	return {"picked":this.picked,"size":this.size,"id":this.list.id,"num":this.num,"name":this.list.title,"price":this.list.price}
+		    }
 		},
 		methods:{
 			...mapMutations(['addNum','jianNum', 'add']),
@@ -117,28 +129,43 @@
 				this.popupVisible=true
 			},
 			handleAdd(){
-				this.addNum()
+				// this.addNum()
+				this.num+=1
 			},
 			handleJian(){
-				this.jianNum()
+				// this.jianNum()
+				this.num-=1
 			},
 			handleSelect(index){
 				this.selectIndex=index
-				console.log(this.picked)
 			},
 			handleSelect2(index){
 				this.selectIndex2=index
-				console.log(this.size)
 			},
-			buyNow(id){
-				this.add(id)
-				// alert('1')
+			buyNow(){
+
+				if(this.goods.num>0){
+					Toast({
+					  message: '填加成功',
+					  className:'tan1',
+					});
+					this.add(this.goods)
+					console.log(this.goods)
+				}else{
+					Toast({
+					  message: '请选择数量',
+					  className:'tan1',
+					});
+				}
 			}
 		},
 		watch:{
 			picked(){
 				console.log('变化了')
 			}
+		},
+		mounted(){
+			console.log(this.list)
 		}
 	}
 </script>

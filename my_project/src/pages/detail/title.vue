@@ -21,7 +21,7 @@
     	},
     	mounted(){
     	console.log(this.title)
-    	// console.log(this.list)
+    	console.log(this.price)
     	}
 	}
 </script>

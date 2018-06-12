@@ -19,11 +19,11 @@
 </template>
 <script>
 	import axios from 'axios'
-	import { Loadmore } from 'mint-ui';
+	import { Loadmore} from 'mint-ui';
 	export default{
 		name:'list-li',
 		components:{
-			Loadmore,
+			Loadmore
 		},
 		data(){
 			return{
@@ -51,7 +51,7 @@
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
-		  		console.log(res)
+		  		console.log(res.data.list)
 		  		// this.z_list = res.data.list
 		  		console.log(this.z_list)
 		  		this.z_list= res.data.list.concat(this.z_list)

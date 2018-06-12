@@ -5,39 +5,44 @@
 		    {
 		      content: 'Delete',
 		      style: { background: 'red', color: '#fff' },
-		      handler: () => deleteSection(1)
+		      handler: () => deleteSection(item)
 		    }
-		  ]">
+		  ]"
+		   v-for="(item,index) in added"
+		   :key="index"
+		>
 		  	<div class="kuang">
 		  		<input class="kuang_l" type="radio" id="one" value="One" name="a" v-model="picked">
 		  		<div class="kuang_c">
 		  			<img src="@/assets/images/Group6@2x.png" alt="">
 		  		</div>
 		  		<div class="kuang_r">
-		  			<div class="title">飞羽跑步鞋男运动鞋飞织慢跑鞋 DH720861</div>
+		  			<div class="title">{{item.goods.name}}</div>
 		  			<div class="size">
-		  				<div class="size_l">黑色</div>
-		  				<div class="size_r">L</div>
+		  				<div class="size_l">{{item.goods.picked}}</div>
+		  				<div class="size_r">{{item.goods.size}}</div>
 		  			</div>
 		  			<div class="price">
-		  				<div class="price_l">¥329</div>
+		  				<div class="price_l">¥{{item.goods.price}}</div>
 		  				<div class="price_r">
-		  					<div class="price_r_l" @click="handlerJianClick">-</div>
-		  					<div class="price_r_c">{{num}}</div>
-		  					<div class="price_r_r" @click="handlerAddClick">+</div>
+		  					<div class="price_r_l" @click="handlerJianClick(item)">-</div>
+		  					<div class="price_r_c">{{item.goods.num}}</div>
+		  					<div class="price_r_r" @click="handlerAddClick(item)">+</div>
 		  				</div>
 		  			</div>
 		  		</div>
 		  	</div>
 		</mt-cell-swipe>
-		<mt-cell-swipe
+		<div class="kong" v-if="!added.length">您的购物车空空如也...</div>
+		<!-- <mt-cell-swipe
 		  :right="[
 		    {
 		      content: 'Delete',
 		      style: { background: 'red', color: '#fff' },
 		      handler: () => this.$messagebox('删除')
 		    }
-		  ]">
+		  ]"
+		>
 		  	<div class="kuang">
 		  		<input class="kuang_l" type="radio" id="one" value="One" name="a" v-model="picked">
 		  		<div class="kuang_c">
@@ -59,10 +64,11 @@
 		  			</div>
 		  		</div>
 		  	</div>
-		</mt-cell-swipe>
+		</mt-cell-swipe> -->
 	</div>
 </template>
 <script>
+	import { mapState,mapMutations } from 'vuex'
 	import { CellSwipe } from 'mint-ui';
 	export default{
 		name:'buycar',
@@ -72,8 +78,14 @@
 		data(){
 			return{
 				picked: '',
-				num:1
+				num:1,
+				carList:[]
 			}
+		},
+		computed:{
+			...mapState({
+		      added:'added'
+		    })
 		},
 		watch:{
 			picked(){
@@ -81,18 +93,24 @@
 			}
 		},
 		methods:{
-			handlerJianClick(){
-				this.num-=1
-				if(this.num<=1){
-					this.num = 1
-				}
+			...mapMutations(['del', 'carAdd','carJian']),
+			handlerJianClick(a){
+				this.carJian(a)
 			},
-			handlerAddClick(){
-				this.num+=1
+			handlerAddClick(a){
+				 this.carAdd(a)
 			},
 			deleteSection(a){
 				console.log(a)
+				this.del(a)
 			}
+		},
+		mounted(){
+			// console.log(JSON.parse(this.added))
+			console.log(this.added)
+			console.log(this.added.length)
+			// console.log(this.carList)
+			// 
 		}
 	}
 </script>
@@ -194,6 +212,13 @@
 						line-height: 0.25rem;
 						font-size: 0.16rem;
 						border: 0.01rem solid #C9C9C9;
+.kong
+	color:#C9C9C9;
+	height: 30px;
+	font-size: 18px;
+	width: 100%;
+	text-align: center;
+	margin-top: 100px;
 </style>
 
 

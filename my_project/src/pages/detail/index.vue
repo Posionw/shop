@@ -1,4 +1,8 @@
 <template>
+<div>
+	<router-link to="/Index">
+	<div class="fan">返回</div>
+	</router-link>
 	<div class="detail">
 		<component :is="type" list="123" :swiper="swiper"></component>
 		<detail-button
@@ -7,8 +11,9 @@
 			@tabPic="tab"></detail-button>
 		<detail-zan :aid="id"></detail-zan>
 		<detail-title :title="title" :price="price"></detail-title>
-		<detail-buycar></detail-buycar>
+		<detail-buycar :list=carlist></detail-buycar>
 	</div>
+</div>
 </template>
 <script>
 	import axios from 'axios'
@@ -26,7 +31,7 @@
 			DetailButton,
 			DetailZan,
 			DetailTitle,
-			DetailBuycar
+			DetailBuycar,
 		},
 		data(){
 			return{
@@ -35,7 +40,8 @@
 				swiper:[],
 				z_detail:[],
 				title:'',
-				price:''
+				price:'',
+				carlist:{}
 			}
 		},
 		methods:{
@@ -60,9 +66,9 @@
 		  		let item = this.z_detail.find(n=>n.id == this.id);
 		  		console.log(item)
 		  		this.swiper = item.swiper//轮播图数据
-		  		console.log(this.swiper)
-		  		this.title = item.title
-		  		console.log(this.title)
+		  		this.title = item.title//标题
+		  		this.price = item.price//价格
+		  		this.carlist = item//商品详细数据
 		  	},
 		  	handleGetDataErr(){
 		  		console.log("失败了")
@@ -76,6 +82,14 @@
 	}
 </script>
 <style lang="stylus" scoped>
+	.mint-header
+		background:#20bcff;
+		height:20px;
+	.fan
+		position:absolute;
+		top:0;
+		left: 0;
+		z-index:10;
 	.detail
 		position:relative;
 		.btn
