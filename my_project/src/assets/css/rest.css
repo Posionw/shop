@@ -10,3 +10,4 @@ i{font-style: normal;}
 html{font-size: 50px;height: 100%;width: 100%;}
 body{height: 100%}
 input{border:none;}
+html,body{-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}

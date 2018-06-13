@@ -25,46 +25,19 @@
 		  			<div class="price">
 		  				<div class="price_l">¥{{item.goods.price}}</div>
 		  				<div class="price_r">
-		  					<div class="price_r_l" @click="handlerJianClick(item)">-</div>
+		  					<div class="price_r_l" @click.prevent="handlerJianClick(item)">-</div>
 		  					<div class="price_r_c">{{item.goods.num}}</div>
-		  					<div class="price_r_r" @click="handlerAddClick(item)">+</div>
+		  					<div class="price_r_r" @click.prevent="handlerAddClick(item)">+</div>
 		  				</div>
 		  			</div>
 		  		</div>
 		  	</div>
 		</mt-cell-swipe>
-		<div class="kong" v-if="!added.length">您的购物车空空如也...</div>
-		<!-- <mt-cell-swipe
-		  :right="[
-		    {
-		      content: 'Delete',
-		      style: { background: 'red', color: '#fff' },
-		      handler: () => this.$messagebox('删除')
-		    }
-		  ]"
-		>
-		  	<div class="kuang">
-		  		<input class="kuang_l" type="radio" id="one" value="One" name="a" v-model="picked">
-		  		<div class="kuang_c">
-		  			<img src="@/assets/images/Group6@2x.png" alt="">
-		  		</div>
-		  		<div class="kuang_r">
-		  			<div class="title">飞羽跑步鞋男运动鞋飞织慢跑鞋 DH720861</div>
-		  			<div class="size">
-		  				<div class="size_l">黑色</div>
-		  				<div class="size_r">L</div>
-		  			</div>
-		  			<div class="price">
-		  				<div class="price_l">¥329</div>
-		  				<div class="price_r">
-		  					<div class="price_r_l">-</div>
-		  					<div class="price_r_c">1</div>
-		  					<div class="price_r_r">+</div>
-		  				</div>
-		  			</div>
-		  		</div>
-		  	</div>
-		</mt-cell-swipe> -->
+		<div class="kong" v-if="!added.length">
+			<div class="pic">
+				<img src="@/assets/images/gouwuche1@2x.png" alt="">
+			</div>
+		您的购物车空空如也...</div>
 	</div>
 </template>
 <script>
@@ -214,11 +187,19 @@
 						border: 0.01rem solid #C9C9C9;
 .kong
 	color:#C9C9C9;
-	height: 30px;
-	font-size: 18px;
+	height: 0.3rem;
+	font-size: 0.18rem;
 	width: 100%;
 	text-align: center;
-	margin-top: 100px;
+	margin-top: 1.5rem;
+	.pic
+		height:1.2rem;
+		width: 1rem;
+		// background:pink;
+		margin: 0 auto;
+		img
+			height:1rem;
+			width: 1rem;
 </style>
 
 

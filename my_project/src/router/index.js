@@ -18,6 +18,10 @@ export default new Router({
 			path: '/Buycar',
 			name: 'Buycar',
 			component: () => import('@/pages/buycar/index'),
+		},{
+			path: '/User',
+			name: 'User',
+			component: () => import('@/pages/user/index'),
 		}]
 	},
 	{

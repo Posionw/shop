@@ -52,7 +52,6 @@
 		  	},
 		  	handleGetDataSucc(res){
 		  		console.log(res.data.list)
-		  		// this.z_list = res.data.list
 		  		console.log(this.z_list)
 		  		this.z_list= res.data.list.concat(this.z_list)
 		  	},

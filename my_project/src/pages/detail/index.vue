@@ -1,7 +1,7 @@
 <template>
 <div>
 	<router-link to="/Index">
-	<div class="fan">返回</div>
+	<div class="fan iconfont">&#xe720;</div>
 	</router-link>
 	<div class="detail">
 		<component :is="type" list="123" :swiper="swiper"></component>
@@ -90,6 +90,8 @@
 		top:0;
 		left: 0;
 		z-index:10;
+		font-size:0.28rem;
+		color: #949494;
 	.detail
 		position:relative;
 		.btn

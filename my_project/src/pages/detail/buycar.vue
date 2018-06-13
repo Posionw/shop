@@ -148,6 +148,8 @@
 					Toast({
 					  message: '填加成功',
 					  className:'tan1',
+					  duration: 1000,
+					  iconClass: 'iconfont icon-right'
 					});
 					this.add(this.goods)
 					console.log(this.goods)
@@ -155,6 +157,7 @@
 					Toast({
 					  message: '请选择数量',
 					  className:'tan1',
+					  duration: 1000
 					});
 				}
 			}

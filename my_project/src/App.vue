@@ -21,5 +21,6 @@ export default {
 	}
   .tan1{
     z-index: 999999;
+    width: 1.2rem;
   }
 </style>

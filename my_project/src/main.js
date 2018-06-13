@@ -7,6 +7,7 @@ import FastClick from 'fastclick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import Mint from 'mint-ui';
 import '@/assets/css/rest.css'
+import '@/assets/icon/iconfont.css'
 import '@/assets/js/flexible.js'
 import 'swiper/dist/css/swiper.css'
 import 'mint-ui/lib/style.css';
