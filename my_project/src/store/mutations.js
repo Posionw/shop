@@ -1,8 +1,19 @@
 export default {
-	changeTab(state,tab){
+    // 记录点击下标
+	  changeTab(state,tab){
   		state.tab= tab
   		console.log(tab)
   	},
+    // 记录id
+    changId(state,id){
+      state.id = id
+      console.log(id)
+    },
+    // 改变订单页index
+    changeOrderTab(state,index){
+      state.orderIndex=index
+      console.log(index)
+    },
   	addNum(state,num){
   		state.num +=1
   	},

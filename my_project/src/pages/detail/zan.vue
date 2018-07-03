@@ -24,10 +24,12 @@
 				if(this.tabIndex!=tab){
 					this.tabIndex=tab
 				}
+				console.log(tab)
 				console.log(this.aid)
 			}
 		},
 		mounted(){
+			this.tabIndex=this.aid
 			console.log(this.aid)
 		}
 	}

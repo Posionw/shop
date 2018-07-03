@@ -1,12 +1,12 @@
 <template>
 		<ul class="homeNav" ref="homeNav">
-      <li v-for="(item,index) in navbar"
-      	:class="{active:item.id == tabIndex}"
-      	@click="selectSort(item.id,index)"
-          :key="index" class="navBarLi">
-        	{{item.text}}
-      </li>
-	  </ul>
+	      <li v-for="(item,index) in navbar"
+	      	:class="{active:index == tabIndex}"
+	      	@click="selectSort(item.goodsTypeId,index)"
+	          :key="index" class="navBarLi">
+	        	{{item.goodsTypeName}}
+	      </li>
+	   </ul>
 </template>
 <script>
 	import axios from 'axios'
@@ -15,7 +15,7 @@
 		name:'index-header',
 		data() {
 	      return {
-	      	tabIndex:'0',
+	      	tabIndex:'0',//当前下标
 	      	s3_width:0,
 	      	scroll_left:0,
 	        navbar: [],
@@ -23,13 +23,14 @@
 	    },
 	    computed:{
 		    ...mapState({
-		      tab:'tab'
+		      tab:'tab',
+		      id:'id'
 		    })
 		  },
 	    methods:{
-	    	...mapMutations(['changeTab']),
+	    	...mapMutations(['changeTab','changId']),
 	    	selectSort(id,index){
-	    		this.tabIndex=id;
+	    		this.tabIndex=index;
 	    		var crash_current=index
 	    		var s = 0;
 	    		if (crash_current != 0 && crash_current != 1 && crash_current != 2) {
@@ -37,16 +38,17 @@
 			    }
 			    this.scroll_left=s
 			    this.$refs.homeNav.scrollTo(s, this.$refs.homeNav.scrollTop);
+			    console.log(id)
 			    this.changeTab(index)
+			    this.changId(id)
 	    	},
 	    	getIndexData(){
-		      axios.get('/api/index.json')
+		      axios.get('/api/header.json')
 		  		  .then(this.handleGetDataSucc.bind(this))
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
-		  		console.log(res)
-		  		this.navbar=res.data.navbar;
+		  		this.navbar=res.data.data;
 		  	},
 		  	handleGetDataErr(){
 		  		console.log("失败了")
@@ -55,11 +57,13 @@
 	    mounted(){
 	    	this.s3_width=document.documentElement.clientWidth/8;
 	    	this.getIndexData()
-	    	console.log(this.tab)
+	    	this.tabIndex=this.tab
 	    },
 	     watch:{
-	     	tab(){
-	    		this.selectSort(1,this.tab)
+	     	tab(val,oldVal){
+	     		console.log(val,oldVal)
+	     		console.log('#######')
+	    		this.selectSort(this.id,this.tab)
 	    		this.tabIndex=this.tab
 	    	}
 	     }

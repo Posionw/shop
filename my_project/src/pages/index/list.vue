@@ -1,23 +1,14 @@
 <template>
 	<div class="product_list">
-
-		<swiper :options="swiperOption" ref="mySwiper">
-	    <swiper-slide>
-	    	<list-li></list-li>
+		<swiper :options="swiperOption" ref="mySwiper" >
+	    <swiper-slide v-for="(item,index) in num" :key="index">
+	    	<list-li :num ="index"></list-li>
 	    </swiper-slide>
-	    <swiper-slide>
-	    	<list-li></list-li>
-	    </swiper-slide>
-	    <swiper-slide>I'm Slide 3</swiper-slide>
-	    <swiper-slide>I'm Slide 4</swiper-slide>
-	    <swiper-slide>I'm Slide 5</swiper-slide>
-	    <swiper-slide>I'm Slide 6</swiper-slide>
-	    <swiper-slide>I'm Slide 7</swiper-slide>
-
 	  </swiper>
 	</div>
 </template>
 <script>
+	import axios from 'axios'
 	import ListLi from './list_li.vue'
 	import { mapState,mapMutations } from 'vuex'
 	export default{
@@ -29,16 +20,18 @@
 	      return {
 	      	swiperIndex:0,
 	        swiperOption: {
-	          // loop:true,
 	          pagination: {
 	            el: '.swiper-pagination'
 	          },
 	          on:{
-			    touchEnd: (event)=>{
+			    slideChange: ()=> {
+			      console.log(this.swiper.activeIndex);
 			      this.swiperIndex=this.swiper.activeIndex
-			    }
+			      this.changeTab(this.swiperIndex)
+			    },
 			  },
 	        },
+	        num:''
 	      }
 	    },
 	    computed: {
@@ -53,18 +46,25 @@
 	      // current swiper instance
 	      // 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
 	      console.log('this is current swiper instance object', this.swiper)
-	      this.swiper.slideTo(this.tab, 1000, false)
-	      console.log(this.tab)
+	      this.swiper.slideTo(this.tab, 0, false)
+	      this.getIndexData()
 	    },
 	    methods:{
 	    	...mapMutations(['changeTab']),
+	    	getIndexData(){
+		      axios.get('/api/header.json')
+		  		  .then(this.handleGetDataSucc.bind(this))
+		  		  .catch(this.handleGetDataErr.bind(this))
+		  	},
+		  	handleGetDataSucc(res){
+		  		console.log(res)
+		  		this.num=res.data.data.length
+		  	},
+		  	handleGetDataErr(){
+		  		console.log("失败了")
+		  	}
 	    },
 	    watch:{
-	    	swiperIndex(){
-	    		console.log('变化了')
-	    		console.log(this.swiperIndex)
-	    		 this.changeTab(this.swiperIndex)
-	    	},
 	    	tab(){
 	    		this.swiper.slideTo(this.tab, 0, false)
 	    		console.log(this.tab)

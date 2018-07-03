@@ -15,6 +15,11 @@
 	export default{
 		name:'tabbar-item',
 		props: ['id'],
+		data(){
+			return{
+				idIndex:'tab1'
+			}
+		},
         computed: {
            isActive(){
                if(this.$parent.$parent.value===this.id){

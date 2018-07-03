@@ -1,0 +1,25 @@
+{
+	"status": 0,
+	"msg": "操作成功",
+	"nextPage": null,
+	"hasMore": 0,
+	"data": [{
+		"goodsTypeId": 0,
+		"goodsTypeName": "上衣"
+	}, {
+		"goodsTypeId": 1,
+		"goodsTypeName": "裤子"
+	}, {
+		"goodsTypeId": 2,
+		"goodsTypeName": "鞋子"
+	}, {
+		"goodsTypeId": 3,
+		"goodsTypeName": "配置"
+	}, {
+		"goodsTypeId": 4,
+		"goodsTypeName": "其他"
+	}, {
+		"goodsTypeId": 5,
+		"goodsTypeName": "食品"
+	}]
+}

@@ -9,7 +9,7 @@
 			class="btn"
 			@tabVideo="tab"
 			@tabPic="tab"></detail-button>
-		<detail-zan :aid="id"></detail-zan>
+		<detail-zan :aid="zan"></detail-zan>
 		<detail-title :title="title" :price="price"></detail-title>
 		<detail-buycar :list=carlist></detail-buycar>
 	</div>
@@ -35,13 +35,14 @@
 		},
 		data(){
 			return{
-				type:"DetailSwiper",
+				type:"DetailSwiper",//判断视频还是图片
 				id:'',
 				swiper:[],
 				z_detail:[],
 				title:'',
 				price:'',
-				carlist:{}
+				carlist:{},
+				zan:2
 			}
 		},
 		methods:{
@@ -53,7 +54,7 @@
 				}
 			},
 			getIndexData(){
-		      axios.get('/api/index_list.json?page='+this.id)
+		      axios.get('/api/index_list.json?id='+this.id)
 		  		  .then(this.handleGetDataSucc.bind(this))
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},

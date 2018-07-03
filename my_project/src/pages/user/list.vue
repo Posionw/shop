@@ -1,12 +1,14 @@
 <template>
 	<div>
 		<ul class="list_k">
+			<router-link to='Myorder'>
 			<li>
 				<div class="pic">
 					<img src="@/assets/images/wd-dingdan@2x.png" alt="">
 				</div>
 				<div class="pic_name">我的订单</div>
 			</li>
+			</router-link>
 			<li>
 				<div class="pic">
 					<img src="@/assets/images/wd-dizhi@2x.png" alt="">

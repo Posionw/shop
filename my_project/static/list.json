@@ -1,0 +1,37 @@
+{
+	"status": 0,
+	"msg": "操作成功",
+	"nextPage": null,
+	"hasMore": 0,
+	"data": [{
+		"goodsId": "1",
+		"goodsName": "复古针织长款毛衣外套",
+		"goodsPrice": 12.5,
+		"goodsViewUrl": null,
+		"goodsType": null,
+		"goodsContent": null,
+		"isSell": null,
+		"imgUrls": "http://aiwolvju.b0.upaiyun.com/uploads/20180105/jliiw9xzdaj300xpqd5c7d1x230h74pr.tmp",
+		"praiseStatus": "false",
+		"collectStatus": "false",
+		"praiseNum": "2",
+		"goodsImgUrl": ["http://aiwolvju.b0.upaiyun.com/uploads/20180105/jliiw9xzdaj300xpqd5c7d1x230h74pr.tmp"],
+		"goodsFormatList": null,
+		"couponList": null
+	},{
+		"goodsId": "2",
+		"goodsName": "休闲宽松运动外套",
+		"goodsPrice": 12.5,
+		"goodsViewUrl": null,
+		"goodsType": null,
+		"goodsContent": null,
+		"isSell": null,
+		"imgUrls": "http://aiwolvju.b0.upaiyun.com/uploads/20180105/jliiw9xzdaj300xpqd5c7d1x230h74pr.tmp",
+		"praiseStatus": "false",
+		"collectStatus": "false",
+		"praiseNum": "2",
+		"goodsImgUrl": ["http://aiwolvju.b0.upaiyun.com/uploads/20180105/jliiw9xzdaj300xpqd5c7d1x230h74pr.tmp"],
+		"goodsFormatList": null,
+		"couponList": null
+	}]
+}

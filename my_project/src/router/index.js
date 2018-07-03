@@ -23,11 +23,14 @@ export default new Router({
 			name: 'User',
 			component: () => import('@/pages/user/index'),
 		}]
-	},
-	{
+	},{
 		path: '/Detail/:id',
 		name: 'Detail',
 		component: () => import('@/pages/detail/index')
 
+	},{
+		path: '/Myorder',
+		name: 'Myorder',
+		component: () => import('@/pages/myorder/index')
 	}]
 })

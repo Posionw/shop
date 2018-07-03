@@ -6,7 +6,12 @@
 <script>
 	export default{
 		name:'tabbar',
-		props: ['value']
+		props: ['value'],
+		// watch:{
+		// 	value(){
+		// 		localStorage.setItem('key',JSON.stringify(this.value))
+		// 	}
+		// }
 	}
 </script>
 <style lang="stylus" scoped>

@@ -2,37 +2,52 @@
 	<div style="height:5.7rem;overflow: scroll;">
 		<mt-loadmore  :top-method="loadTop" :autoFill="autoFill" :bottom-method="loadBottom"  ref="loadmore">
 		  <ul class="list">
+		  	<template v-if="z_list.length > 1">
 		    <li class="list_card" v-for="(item,index) in z_list" :key="index">
-		    	<router-link :to="'/Detail/'+item.id">
+		    	<router-link :to="'/Detail/'+item.goodsId">
 			    	<div class="card_t">
-			    		<img src="@/assets/images/Group6@2x.png" alt="">
+			    		<img :src="item.imgUrls" alt="">
 			    	</div>
 			    	<div class="card_b">
-			    		<div class="card_title">{{item.title}}</div>
-			    		<div class="card_price">¥{{item.price}}</div>
+			    		<div class="card_title">{{item.goodsName}}</div>
+			    		<div class="card_price">¥{{item.goodsPrice}}</div>
 			    	</div>
 		    	</router-link>
 		    </li>
+		    </template>
+		    <template v-else>
+		    <li class="loading">加载中...</li>
+		    </template>
 		  </ul>
 		</mt-loadmore>
 	</div>
 </template>
 <script>
 	import axios from 'axios'
-	import { Loadmore} from 'mint-ui';
+	import { Loadmore,Indicator} from 'mint-ui';
+	import { mapState} from 'vuex'
 	export default{
 		name:'list-li',
 		components:{
-			Loadmore
+			Loadmore,
+			Indicator
 		},
+		props:['num'],
 		data(){
 			return{
 				z_list:[],
 				autoFill:false,
 				autoLoaded:false,
 				page:1,
+				loading:true
 			}
 		},
+		computed:{
+		    ...mapState({
+		      id:'id',
+		      tab:'tab'
+		    })
+		 },
 		methods:{
 			loadTop() {
 			  // load more data
@@ -40,33 +55,49 @@
 			},
 			loadBottom() {
 			  this.page+=1
-			  this.getIndexData()
+			  this.getIndexData(this.id)
 			  console.log('加载')
 			  this.allLoaded = true;// if all data are loaded
 			  this.$refs.loadmore.onBottomLoaded();
 			},
-			getIndexData(){
-		      axios.get('/api/index.json?page='+this.page)
+			getIndexData(id){
+		      axios.get('/api/list.json?page='+this.page+'&goodsTypeId='+id)
 		  		  .then(this.handleGetDataSucc.bind(this))
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
-		  		console.log(res.data.list)
+		  		console.log(res)
 		  		console.log(this.z_list)
-		  		this.z_list= res.data.list.concat(this.z_list)
+		  		this.z_list= res.data.data.concat(this.z_list)
 		  	},
 		  	handleGetDataErr(){
 		  		console.log("失败了")
 		  	}
 		},
 		mounted(){
-			this.getIndexData()
-		}
+			if(this.tab==this.num){
+				this.getIndexData(this.tab)
+			}
+		},
+		watch:{
+	    	tab(){
+	    		if(this.tab==this.num){
+	    			this.getIndexData(this.tab)
+	    		}
+	    	}
+	     }
 	}
 </script>
 <style lang="stylus" scoped>
 	.list
 		flex:1;
+		.loading
+			width:100%;
+			color:red;
+			position: fixed;
+			margin-left: 50%;
+			z-index: 9;
+			top:5%;
 		.list_card
 			height:4.3rem;
 			width: 3.38rem;
