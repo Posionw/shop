@@ -1,6 +1,6 @@
 <template>
-	<div clal>
-		<mt-navbar v-model="active">
+	<div>
+		<mt-navbar v-model="currentTab">
 		  <mt-tab-item id="0">全部</mt-tab-item>
 		  <mt-tab-item id="1">待付款</mt-tab-item>
 		  <mt-tab-item id="2">待收货</mt-tab-item>
@@ -20,18 +20,22 @@
 		},
 		data(){
 			return{
-				active:'0'
+				currentTab:'0'
 			}
 		},
+
 		computed:{
-			...mapState(['orderIndex'])
+			...mapState(['orderIndex']),
+			tab:function(){
+				return this.currentTab
+			}
 		},
 		methods:{
 			...mapMutations(['changeOrderTab'])
 		},
 		watch:{
-			active(){
-				this.changeOrderTab(this.active)
+			currentTab(){
+				this.changeOrderTab(this.currentTab)
 			}
 		}
 	}

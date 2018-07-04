@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="order">
 		<myorder-header></myorder-header>
 		<myorder-list></myorder-list>
 	</div>
@@ -16,5 +16,6 @@
 	}
 </script>
 <style lang="stylus" scoped>
-
+	.order
+		height:100%;
 </style>

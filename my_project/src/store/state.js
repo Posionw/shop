@@ -3,6 +3,6 @@ export default {
 	id:'',
 	num:0,
 	added:[],//购物车值
-	orderIndex:'0',
+	orderIndex:0,
 
 }

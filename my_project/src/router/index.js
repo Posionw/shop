@@ -32,5 +32,13 @@ export default new Router({
 		path: '/Myorder',
 		name: 'Myorder',
 		component: () => import('@/pages/myorder/index')
+	},{
+		path: '/Site',
+		name: 'Site',
+		component: () => import('@/pages/site/index')
+	},{
+		path: '/Changesite',
+		name: 'Changesite',
+		component: () => import('@/pages/changesite/index')
 	}]
 })

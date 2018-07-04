@@ -2,19 +2,21 @@
 	<div>
 		<ul class="list_k">
 			<router-link to='Myorder'>
-			<li>
-				<div class="pic">
-					<img src="@/assets/images/wd-dingdan@2x.png" alt="">
-				</div>
-				<div class="pic_name">我的订单</div>
-			</li>
+				<li>
+					<div class="pic">
+						<img src="@/assets/images/wd-dingdan@2x.png" alt="">
+					</div>
+					<div class="pic_name">我的订单</div>
+				</li>
 			</router-link>
-			<li>
-				<div class="pic">
-					<img src="@/assets/images/wd-dizhi@2x.png" alt="">
-				</div>
-				<div class="pic_name">收货地址</div>
-			</li>
+			<router-link to='Site'>
+				<li>
+					<div class="pic">
+						<img src="@/assets/images/wd-dizhi@2x.png" alt="">
+					</div>
+					<div class="pic_name">收货地址</div>
+				</li>
+			</router-link>
 			<li>
 				<div class="pic">
 					<img src="@/assets/images/wd-kaquan@2x.png" alt="">
