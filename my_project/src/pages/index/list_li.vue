@@ -1,6 +1,6 @@
 <template>
 	<div style="height:5.7rem;overflow: scroll;">
-		<mt-loadmore  :top-method="loadTop" :autoFill="autoFill" :bottom-method="loadBottom"  ref="loadmore">
+		<mt-loadmore   :autoFill="autoFill" :bottom-method="loadBottom"  ref="loadmore">
 		  <ul class="list">
 		  	<template v-if="z_list.length > 1">
 		    <li class="list_card" v-for="(item,index) in z_list" :key="index">
@@ -16,7 +16,12 @@
 		    </li>
 		    </template>
 		    <template v-else>
-		    <li class="loading">加载中...</li>
+			    <li class="loading">
+			    	<div class="loading_t">
+			    		<img src="@/assets/images/Group.png" alt="">
+			    	</div>
+			    	<div class="loading_b">正在努力加载中，请稍候...</div>
+			    </li>
 		    </template>
 		  </ul>
 		</mt-loadmore>
@@ -55,7 +60,7 @@
 			},
 			loadBottom() {
 			  this.page+=1
-			  this.getIndexData(this.id)
+			  this.getIndexData(this.tab)
 			  console.log('加载')
 			  this.allLoaded = true;// if all data are loaded
 			  this.$refs.loadmore.onBottomLoaded();
@@ -82,7 +87,11 @@
 		watch:{
 	    	tab(){
 	    		if(this.tab==this.num){
-	    			this.getIndexData(this.tab)
+	    			console.log(this.z_list.length)
+	    			if(this.z_list.length<1){
+	    				this.getIndexData(this.tab)
+	    			}
+	    			console.log(this.page)
 	    		}
 	    	}
 	     }
@@ -95,26 +104,46 @@
 			width:100%;
 			color:red;
 			position: fixed;
-			margin-left: 50%;
+			// background:pink;
+			// margin-left: 50%;
+			height: 1.6rem;
 			z-index: 9;
-			top:5%;
+			top:1.6rem;
+			.loading_t
+				height:1.12rem;
+				width: 1.2rem;
+				// background:yellow;
+				margin:0 auto;
+				img
+					height: 1.12rem;
+					width: 1.2rem;
+			.loading_b
+				height:0.19rem;
+				width: 100%;
+				text-align: center;
+				color: #000;
+				font-size: 0.14rem;
+				margin-top: 0.28rem;
 		.list_card
 			height:4.3rem;
 			width: 3.38rem;
 			margin: 0 auto;
 			margin-top: 0.14rem;
+			background:#fff;
 			box-shadow: 0px 4px 12px 0px rgba(174,201,205,0.70);
 			border-radius:0.05rem;
 			.card_t
 				height:3.4rem;
 				width: 3.38rem;
+				border-radius:0.05rem 0.05rem 0 0;
 				img
 					height:3.4rem;
 					width: 3.38rem;
+					border-radius:0.05rem 0.05rem 0 0;
 			.card_b
 				height:0.522rem;
 				width: 3.066rem;
-				border-radius: 0 0 5px 5px;
+				border-radius: 0 0 0.05rem 0.05rem;
 				padding: 0.189rem 0.157rem;
 				.card_title
 					font-family: PingFangSC-Semibold;

@@ -82,6 +82,7 @@
 	    font-family: '微软雅黑';
 	    white-space: nowrap;
 	    z-index: 999;
+	    background:#fff;
 	    height:0.46rem;
 	    transition: all 5s ease;
 	    .navBarLi {

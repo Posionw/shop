@@ -40,5 +40,13 @@ export default new Router({
 		path: '/Changesite',
 		name: 'Changesite',
 		component: () => import('@/pages/changesite/index')
+	},{
+		path: '/Card',
+		name: 'Card',
+		component: () => import('@/pages/card/index')
+	},{
+		path: '/Collect',
+		name: 'Collect',
+		component: () => import('@/pages/collect/index')
 	}]
 })

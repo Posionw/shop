@@ -18,7 +18,7 @@
 			<div class="input_l">详细地址</div>
 			<input v-model="xsite" placeholder="请填写详细地址" type="text" />
 		</div>
-		<changesite-baocun></changesite-baocun>
+		<div class="button" @click="handleClickSave">保存</div>
 		<mt-popup
 		  v-model="popupVisible"
 		  position="bottom">
@@ -31,12 +31,10 @@
 <script>
 	import { Popup,Picker } from 'mint-ui';
 	import myaddress from './myaddress.json';
-	import changesiteBaocun from './baocun.vue'
 	export default{
 		name:'changesite',
 		components:{
 			Popup,
-			changesiteBaocun,
 			Picker
 		},
 		data(){
@@ -85,6 +83,9 @@
 			handleClick(){
 				this.popupVisible=true
 			},
+			handleClickSave(){
+				console.log(this.name,this.phone,this.myAddressProvince)
+			},
 			onMyAddressChange(picker, values) {
               if(myaddress[values[0]]){    //这个判断类似于v-if的效果（可以不加，但是vue会报错，很不爽）
                     picker.setSlotValues(1,Object.keys(myaddress[values[0]])); //  Object.keys()会返回一个数组，当前省的数组
@@ -108,6 +109,16 @@
 .page
 	height:100%;
 	background:#fff;
+	.button
+		position:fixed;
+		bottom: 0;
+		height: 0.5rem;
+		width: 100%;
+		background:#3792EB;
+		color:#fff;
+		text-align: center;
+		line-height: 0.5rem;
+		font-size: 0.14rem;
 	.input_box
 		height:0.66rem;
 		width: 3.39rem;

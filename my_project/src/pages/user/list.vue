@@ -17,18 +17,22 @@
 					<div class="pic_name">收货地址</div>
 				</li>
 			</router-link>
-			<li>
-				<div class="pic">
-					<img src="@/assets/images/wd-kaquan@2x.png" alt="">
-				</div>
-				<div class="pic_name">我的卡券</div>
-			</li>
-			<li>
-				<div class="pic">
-					<img src="@/assets/images/wd-shoucang@2x.png" alt="">
-				</div>
-				<div class="pic_name">我的收藏</div>
-			</li>
+			<router-link to='Card'>
+				<li>
+					<div class="pic">
+						<img src="@/assets/images/wd-kaquan@2x.png" alt="">
+					</div>
+					<div class="pic_name">我的卡券</div>
+				</li>
+			</router-link>
+			<router-link to='Collect'>
+				<li>
+					<div class="pic">
+						<img src="@/assets/images/wd-shoucang@2x.png" alt="">
+					</div>
+					<div class="pic_name">我的收藏</div>
+				</li>
+			</router-link>
 		</ul>
 	</div>
 </template>

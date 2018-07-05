@@ -20,12 +20,12 @@
 				<div class="list_li_compile">
 					<input class="select" type="radio" id="one" value="1" name="a" v-model="picked">
 					<span class="moren">默认地址</span>
-					<router-link to="Changesite">
-						<div class="bianji">
-							<img src="@/assets/images/bj@2x.png" alt="">
-							<div class="bianji_r">编辑</div>
-						</div>
-					</router-link>
+						<router-link to="Changesite">
+							<div class="bianji">
+								<img src="@/assets/images/bj@2x.png" alt="">
+								<div class="bianji_r">编辑</div>
+							</div>
+						</router-link>
 				</div>
 			</div>
 		</mt-cell-swipe>
