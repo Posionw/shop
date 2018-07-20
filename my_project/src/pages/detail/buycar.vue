@@ -1,21 +1,58 @@
 <template>
 	<div>
 		<mt-popup v-model="popupVisible"
-		  style="background:0"
-		  position="bottom">
+		  		  style="background:0"
+		 		  position="bottom">
 		  <div class="kuang">
 		  	<div class="kuang_w">
 		  		<div class="kuang_t">
 		  			<div class="top_pic">
-		  				<img src="@/assets/images/Group6@2x.png" alt="">
+		  				<img :src="imgUrl" alt="">
 		  			</div>
 		  			<div class="top_title">
-		  				<div class="top_title_t">{{list.title}}</div>
-		  				<div class="top_price">¥{{list.price}}</div>
+		  				<div class="top_title_t">{{title}}</div>
+		  				<div class="top_price">¥{{price}}</div>
 		  			</div>
 		  		</div>
 		  		<div class="kuang_c">
-		  			<div class="select">
+					<div class="select">
+		  				<div class="select_name">
+		  					{{goodsFormats1.formatName}}
+		  				</div>
+		  				<ul class="select_li">
+		  					<li :class="[{active:item.infoFormatId==selectIndex},{act:item.status!==1}]"
+		  					    @click="handleSelect(index,item.infoFormatId,item.status,item.img)"
+								v-for="(item,index) in goodsFormats1data">
+		  						{{item.infoName}}
+		  						<input type="radio"
+		  							   v-model="picked"
+		  							   :value="item.infoName"
+		  							   v-if="item.status==1"
+		  							   name="a">
+		  					</li>
+		  				</ul>
+		  			</div>
+		  			<template v-if="goodsFormats2data.length==0">
+
+		  			</template>
+		  			<template v-else>
+		  			 <div class="select">
+		  				<div class="select_name">{{goodsFormats2.formatName}}</div>
+		  				<ul class="select_li">
+		  					<li :class="[{active:item.infoFormatId==selectIndex2},{act:item.status!==1}]"
+		  					    @click="handleSelect2(index,item.infoFormatId,item.status,item.img)"
+		  					    v-for="(item,index) in goodsFormats2data">
+		  						{{item.infoName}}
+		  						<input type="radio"
+		  							   v-model="size"
+		  							   :value="item.infoName"
+		  							   v-if="item.status==1"
+		  							   name="b">
+		  					</li>
+		  				</ul>
+		  			</div>
+		  			</template>
+		  			<!-- <div class="select">
 		  				<div class="select_name">颜色</div>
 		  				<ul class="select_li">
 		  					<li :class="{active:index==selectIndex}"
@@ -24,21 +61,9 @@
 		  						{{item}}
 		  						<input type="radio" v-model="picked" :value="item" name="a">
 		  					</li>
-		  					<!-- <li :class="{active:'1'==selectIndex}" @click="handleSelect(1)">
-		  					蓝色
-		  						<input type="radio" v-model="picked" value="蓝色" name="a">
-		  					</li>
-		  					<li :class="{active:'2'==selectIndex}" @click="handleSelect(2)">
-		  					灰色
-		  						<input type="radio" v-model="picked" value="灰色" name="a">
-		  					</li>
-		  					<li :class="{active:'3'==selectIndex}" @click="handleSelect(3)">
-		  					黄色
-		  						<input type="radio" v-model="picked" value="黄色" name="a">
-		  					</li> -->
 		  				</ul>
-		  			</div>
-		  			<div class="select">
+		  			</div> -->
+		  			<!-- <div class="select">
 		  				<div class="select_name">尺码</div>
 		  				<ul class="select_li">
 		  					<li :class="{active:index==selectIndex2}"
@@ -47,16 +72,16 @@
 		  						{{item}}
 		  						<input type="radio" v-model="size" :value="item" name="b">
 		  					</li>
-		  					<!-- <li :class="{active:'1'==selectIndex2}" @click="handleSelect2(1)">
+		  					<li :class="{active:'1'==selectIndex2}" @click="handleSelect2(1)">
 		  					S
 							<input type="radio" v-model="size" value="s" name="b">
 		  					</li>
 		  					<li :class="{active:'2'==selectIndex2}" @click="handleSelect2(2)">
 		  					L
 							<input type="radio" v-model="size" value="s" name="b">
-		  					</li> -->
+		  					</li>
 		  				</ul>
-		  			</div>
+		  			</div> -->
 		  		</div>
 		  		<div class="number">
 		  			<div class="number_l">数量</div>
@@ -103,48 +128,121 @@
 			Toast
 		},
 		props:{
-    		list:{}
+    		list:{},
+    		price:'',					//价格
+    		title:'',					//名字
+    		goodsId:'',					//商品id
+    		goodsFormats1:'',			//筛选1总数据
+    		goodsFormats2:'',			//筛选2总数据
+    		goodsFormats1data:'',		//筛选1选项
+    		goodsFormats2data:'',		//筛选2选项
+    		imgUrl:'',					//默认图片
+    		landlordId:'',				//房东id
+    		shopName:''					//店铺名
     	},
 		data(){
 			return{
-				popupVisible:false,
-				picked:'冰灰',
-				size:'xs',
-				selectIndex:0,
-				selectIndex2:0,
-				num:0
+				popupVisible:false,		//是否展示购物车
+				picked:'',				//筛选1的值
+				size:'',				//筛选2的值
+				selectIndex:'999',		//筛选1下标
+				selectIndex2:'999',		//筛选2下标
+				num:0,					//数量
 			}
 		},
 		computed:{
-		    // ...mapState({
-		    //   num:'num'
-		    // }),
 		    goods(){
-		    	return {"picked":this.picked,"size":this.size,"id":this.list.id,"num":this.num,"name":this.list.title,"price":this.list.price}
+		    	return {landlordId:this.landlordId,shopName:this.shopName,sp:[{"picked":this.picked,"size":this.size,"id":this.goodsId,"num":this.num,"name":this.title,"price":this.price,imgUrl:this.imgUrl,selected:true}]}
 		    }
 		},
 		methods:{
-			...mapMutations(['addNum','jianNum', 'add']),
-			tan(){
+			...mapMutations(['add']),					//添加购物车
+			tan(){										//点击显示详情选项
 				this.popupVisible=true
 			},
-			handleAdd(){
-				// this.addNum()
+			handleAdd(){								//点击加号
 				this.num+=1
 			},
-			handleJian(){
-				// this.jianNum()
+			handleJian(){								//点击减号
 				this.num-=1
+				if(this.num<=0){
+  					this.num=0
+  				}
 			},
-			handleSelect(index){
-				this.selectIndex=index
+			handleSelect(index,id,state,img){				//点击筛选1
+				if(state == 1){
+					if(this.selectIndex==id){           //此处判断为取消
+						this.selectIndex='999'			//删除选中
+						this.picked = ''				//取消重新赋值
+						this.$emit('infoFormatId1',{id:id,state:0}) //传给父级id及取消事件
+					}else{
+						this.selectIndex=id 						//重新赋值id选中状态
+						this.$emit('infoFormatId1',{id:id,state:1,img:img}) //传给父级id及点击事件
+						console.log(img)
+
+					}
+				}
+				console.log(id)
 			},
-			handleSelect2(index){
-				this.selectIndex2=index
+			handleSelect2(index,id,state,img){				//点击筛选2
+				console.log(id)
+				console.log(this.selectIndex2)
+				if(state==1){							//判断是否有货
+					if(this.selectIndex2==id){			//判断是否取消
+						this.selectIndex2='999'			//取消重新赋值
+						this.size = ''					//选中状态重新赋值
+						this.$emit('infoFormatId2',{id:id,state:0}) //传给父级id及取消事件
+					}else{
+						this.selectIndex2=id 						//重新赋值id选中状态
+						this.$emit('infoFormatId2',{id:id,state:1,img:img}) //传给父级id及点击事件
+					}
+				}
+				console.log(id)
 			},
 			buyNow(){
+				console.log(this.goods)
+				if(this.goodsFormats2data.length==0){					//判断如果只有选项1的情况
+					console.log(this.goods.sp[0].num)
+					//原写法》》》》》》》》》》》》》》》》》
+					// if(this.goods.num>0 && this.picked!=''){
+					// 	Toast({
+					// 	  message: '填加成功',
+					// 	  className:'tan1',
+					// 	  duration: 1000,
+					// 	  iconClass: 'iconfont icon-right'
+					// 	});
+					// 	this.add(this.goods)
+					// 	console.log(this.goods.picked)
+					// }else{
+					// 	Toast({
+					// 	  message: '请完善选项',
+					// 	  className:'tan1',
+					// 	  duration: 1000
+					// 	});
+					// }
+					// 结束》》》》》》》》》》》》》》》》》》》》
+					// 新写法》》》》》》》》》》》》》》》》》》》
+					if(this.goods.sp[0].num>0 && this.picked!=''){
+						Toast({
+						  message: '填加成功',
+						  className:'tan1',
+						  duration: 1000,
+						  iconClass: 'iconfont icon-right'
+						});
+						this.add(this.goods)
+						console.log(this.goods.picked)
+					}else{
+						Toast({
+						  message: '请完善选项',
+						  className:'tan1',
+						  duration: 1000
+						});
+					}
+					// 新写法结束》》》》》》》》》》》》》》》》》》
 
-				if(this.goods.num>0){
+				}else{
+					//原写法开始 》》》》》》》》》》》》》》》》》》》》》》》》》》
+					if(this.goods.num>0 && this.picked!=''&&this.size!='' ){//判断数量选项1选项2不为空
 					Toast({
 					  message: '填加成功',
 					  className:'tan1',
@@ -152,19 +250,57 @@
 					  iconClass: 'iconfont icon-right'
 					});
 					this.add(this.goods)
-					console.log(this.goods)
-				}else{
-					Toast({
-					  message: '请选择数量',
-					  className:'tan1',
-					  duration: 1000
-					});
+					console.log(this.goods.picked)
+					}else{
+						Toast({
+						  message: '请完善选项',
+						  className:'tan1',
+						  duration: 1000
+						});
+					}
+					//原写法结束 》》》》》》》》》》》》》》》》》》》》》》》》》》
 				}
 			}
 		},
 		watch:{
 			picked(){
-				console.log('变化了')
+				console.log(this.goods.picked)
+			},
+			popupVisible(){								//显示弹框滚动条禁止滚动
+				if(this.popupVisible == true){
+					document.documentElement.style.overflowY = 'hidden';
+				}else{
+					document.documentElement.style.overflowY = 'scroll';
+				}
+			},
+			// goodsFormats1(){							//对选项第一项默认赋值
+			// 	console.log(this.goodsFormats1)
+			// },
+			// goodsFormats2(){							//对选项第二项默认赋值
+			// 	console.log(this.goodsFormats2)
+			// },
+			goodsFormats2data(){
+				console.log(this.goodsFormats2data)
+				let item = this.goodsFormats2data.find(n=>n.status == 0);
+				if(item){
+					var a = item.infoFormatId
+					console.log(a)
+					if(this.selectIndex2==a){
+							this.size = ''
+							this.selectIndex2='999'
+					}
+				}
+			},
+			goodsFormats1data(){
+				console.log(this.goodsFormats1data)
+				let item = this.goodsFormats1data.find(n=>n.status == 0);
+				if(item){
+					var a = item.infoFormatId
+					if(this.selectIndex==a){
+							this.picked = ''
+							this.selectIndex='999'
+					}
+				}
 			}
 		},
 		mounted(){
@@ -176,7 +312,7 @@
 	.footer
 	   height:0.6rem;
 	   width: 100%;
-	   // background: #FFFFFF;
+	   background: #FFFFFF;
 	   box-shadow: 0px -4px 12px 0px #EDF3F4;
 	   position: fixed;
 	   bottom:0;
@@ -196,14 +332,16 @@
 	   			height:0.23rem;
 	   			width: 0.23rem;
 	.kuang
-		height:3.71rem;
+		// height:3.71rem;
+		height: 5.7rem;
 		width: 3.75rem;
 		// background:#fff;
 		position:relative;
 		z-index: 9999;
 		overflow: hidden;
 		.kuang_w
-			height:3.41rem;
+			// height:3.41rem;
+			height:5.41rem;
 			width: 3.75rem;
 			background:#fff;
 			margin-top: 0.3rem;
@@ -220,10 +358,12 @@
 					width: 0.9rem;
 					// background:yellowgreen;
 					margin-left: 0.18rem;
+					border-radius: 0.05rem;
 					float:left;
 					img
 						height:0.9rem;
 						width: 0.9rem;
+						border-radius: 0.05rem;
 				.top_title
 					height:0.6rem;
 					flex:1;
@@ -250,17 +390,18 @@
 						color: #FB596B;
 						line-height: 0.2rem;
 			.kuang_c
-				height:1.59rem;
+				max-height:3.59rem;
 				width: 3.38rem;
 				// background: yellowgreen;
 				margin-top: 0.17rem;
 				margin-left: 0.2rem;
 				float: left;
+				overflow-y: scroll;
 				.select
 					min-height:0.6rem;
 					width: 3.38rem;
 					// background:pink;
-					margin-bottom: 0.13rem;
+					// margin-bottom: 0.13rem;
 					.select_name
 						height:0.22rem;
 						width: 100%;
@@ -273,9 +414,10 @@
 						width: 100%;
 						// background:yellow;
 						margin-top: 0.12rem;
+						overflow:hidden;
 						li
 							height: 0.24rem;
-							width: 0.38rem;
+							min-width: 0.28rem;
 							// background:red;
 							float: left;
 							border: 1px solid #D5D5DB;
@@ -284,18 +426,24 @@
 							text-align: center;
 							margin-right: 0.12rem;
 							position:relative;
+							padding: 0 0.08rem;
+							margin-bottom: 0.1rem;
 						.active
 							background: #20BCFF;
 							border: 1px solid #20BCFF;
 							border-radius: 2px;
 							color: #fff;
+						.act
+							background:#ededed;
+							color: #c9c9c9;
 						input
 							height: 0.24rem;
-							width: 0.38rem;
+							width: 100%;
 							position:absolute;
 							top:0;
 							left: 0;
 							opacity: 0;
+							padding: 0 0.08rem;
 			.number
 				height:0.26rem;
 				width: 3.38rem;

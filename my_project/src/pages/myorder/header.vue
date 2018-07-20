@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<mt-navbar v-model="currentTab">
-		  <mt-tab-item id="0">全部</mt-tab-item>
+		<mt-navbar class="htop" v-model="currentTab">
+		  <mt-tab-item id="">全部</mt-tab-item>
 		  <mt-tab-item id="1">待付款</mt-tab-item>
 		  <mt-tab-item id="2">待收货</mt-tab-item>
 		  <mt-tab-item id="3">已完成</mt-tab-item>
@@ -20,7 +20,7 @@
 		},
 		data(){
 			return{
-				currentTab:'0'
+				currentTab:''
 			}
 		},
 
@@ -41,6 +41,9 @@
 	}
 </script>
 <style lang='stylus' scoped>
+	.htop
+		margin-top:0.4rem;
+		box-szing:border-box;
 	.list
 		margin-top:10px;
 </style>

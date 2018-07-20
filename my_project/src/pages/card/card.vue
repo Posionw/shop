@@ -1,37 +1,46 @@
 <template>
 	<ul>
-		<li class="card_k">
+		<template v-if="list.length!=0">
+		<li class="card_k" v-for="(item,index) in list">
 			<div class="card_l">
-				<div class="card_l_t">80% OFF</div>
-				<div class="card_l_b">优惠券使用范围及商铺其他信息优惠券使用范围及围及商铺其他信息</div>
+				<div class="card_l_t">¥{{item.couponMoney}}</div>
+				<div class="card_l_b">{{item.rules}}}</div>
+				<div class="card_l_date">使用期限:{{item.startTime}}-{{item.endTime}}</div>
 			</div>
 			<div class="card_r">
-				<div class="card_r_t">使用期限</div>
-				<div class="card_r_c">2018年3月15号</div>
-				<div class="card_r_b">立即使用</div>
+				 <div class="card_r_t">快快选购吧</div>
+				<!--<div class="card_r_c">2018年3月15号</div> -->
+				<router-link to="Index">
+					<div class="card_r_b">立即使用</div>
+				</router-link>
 			</div>
 		</li>
-		<li class="card_k">
-			<div class="card_l">
-				<div class="card_l_t">80% OFF</div>
-				<div class="card_l_b">优惠券使用范围及商铺其他信息优惠券使用范围及围及商铺其他信息</div>
+		</template>
+		<template v-else>
+			<div class="moren">
+				<img src="@/assets/images/wu.png" alt="">
 			</div>
-			<div class="card_r">
-				<div class="card_r_t">使用期限</div>
-				<div class="card_r_c">2018年3月15号</div>
-				<div class="card_r_b">立即使用</div>
-			</div>
-		</li>
+		</template>
 	</ul>
 </template>
 <script>
+	import { Indicator } from 'mint-ui';
 	export default {
-		name:'card-card'
+		name:'card-card',
+		props:{
+			list:''
+		}
 	}
 </script>
 <style lang="stylus" scoped>
 ul
+	margin-top:0.4rem;
+	box-sizing: border-box;
 	overflow:hidden;
+	.moren
+		width:100%;
+		text-align: center;
+		margin-top: 1rem;
 	.card_k
 		height:1.16rem;
 		width: 3.40rem;
@@ -62,20 +71,34 @@ ul
 			    -webkit-line-clamp: 1;
 			    -webkit-box-orient: vertical;
 			.card_l_b
-				height:0.36rem;
+				font-size: 0.12rem;
+				height:0.18rem;
 				width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				word-wrap: break-word;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
 				// background: red;
 				margin-top: 0.094rem;
 				line-height: 0.18rem;
 				color: #fff;
+				white-space: normal !important;
+			.card_l_date
+				height:0.18rem;
+				width: 100%;
+				// background:pink;
+				overflow: hidden;
+				text-overflow: ellipsis;
 				display: -webkit-box;
-			    overflow: hidden;
-			    font-size: 0.12rem;
-			    white-space: normal !important;
-			    text-overflow: ellipsis;
-			    word-wrap: break-word;
-			    -webkit-line-clamp: 2;
-			    -webkit-box-orient: vertical;
+				word-wrap: break-word;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				// margin-top: 0.094rem;
+				line-height: 0.18rem;
+				color: #fff;
+				white-space: normal !important;
 		.card_r
 			height:0.992rem;
 			width: 1.14rem;
@@ -87,7 +110,7 @@ ul
 				color: #333;
 				width: 100%;
 				text-align: center;
-				margin-top: 0.064rem;
+				margin-top: 0.204rem;
 				// background: red;
 			.card_r_c
 				height:0.2rem;

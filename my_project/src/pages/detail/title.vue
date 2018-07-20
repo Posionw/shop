@@ -2,26 +2,78 @@
 	<div>
 		<div class="title">
 			<div class="title_t">{{title}}</div>
-			<div class="title_b">¥{{price}}</div>
-		</div>
-		<div class="xqxx">
-			<div class="xqxx_l"></div>
-			<div class="xqxx_r">
-				详情信息
+			<div class="title_b">
+				<span class="price_m">¥{{price}}</span>
+				<span class="price_y">¥{{oldPrice}}</span>
+				<div class="zan_number">{{zan}}人说好</div>
+				<div v-if="zan_state==false"
+					 class="zan"
+					 @click="handleClick">
+					<img src="@/assets/images/zan@2x.png" alt="">
+				</div>
+				<div v-else
+					 class="zan"
+					 @click="handleClick">
+					<img src="@/assets/images/zan.png" alt="">
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
+	import axios from 'axios'
+	import { mapState } from 'vuex'
 	export default{
 		name:"detail-title",
 		props:{
     		title:'',
-    		price:''
+    		price:'',
+    		oldPrice:'',
+    		dzan:'',
+    		zan_number:'',
+    		goodsId:''
+    	},
+    	data(){
+    		return {
+    			zan:'',
+    			zan_state:'',
+    		}
+    	},
+    	computed:{
+			 ...mapState(['userId']),
+		},
+    	methods:{
+    		handleClick(){
+    			if(this.zan_state==false){
+    				this.zan+=1
+    			}else{
+    				this.zan-=1
+    			}
+    			this.zan_state=!this.zan_state
+    			this.getIndexData()
+    		},
+    		getIndexData(){
+	    		axios.get('/ds-app/home/praiseGoods?goodsId='+this.goodsId+'&praiseStatus='+this.zan_state+'&userId='+this.userId)
+		  		  .then(this.handleGetDataSucc.bind(this))
+		  		  .catch(this.handleGetDataErr.bind(this))
+		  	},
+		  	handleGetDataSucc(res){
+		  		console.log(res)
+		  	},
+		  	handleGetDataErr(){
+		  		console.log("失败了")
+		  	}
     	},
     	mounted(){
-    	console.log(this.title)
-    	console.log(this.price)
+
+    	},
+    	watch:{
+    		dzan(){
+    			this.zan_state=this.dzan
+    		},
+    		zan_number(){
+    			this.zan = Number(this.zan_number)
+    		}
     	}
 	}
 </script>
@@ -57,24 +109,30 @@
 			color: #FB596B;
 			margin: 0 auto;
 			margin-top: 0.11rem;
-	.xqxx
-		height:0.25rem;
-		width: 100%;
-		margin-top: 0.31rem;
-		.xqxx_l
-			height:0.2rem;
-			width: 0.04rem;
-			background: #20BCFF;
-			border-radius: 100px;
-			float: left;
-			margin-top: 0.025rem;
-			margin-left: 0.18rem;
-		.xqxx_r
-			font-family: '.PingFang-SC-Regular';
-			font-size: 0.18rem;
-			color: #21283E;
-			float: left;
-			margin-left: 0.08rem;
+			.price_m
+				font-family: AvenirNext-DemiBold;
+				font-size: 0.2rem;
+				color: #FB596B;
+			.price_y
+				font-family: AvenirNext-DemiBold;
+				font-size: 0.12rem;
+				color:#999;
+				text-decoration:line-through;
+			.zan_number
+				float:right;
+				color:#20BCFF;
+				font-size: 0.13rem;
+				font-family: '.PingFang-SC-Regular';
+			.zan
+				height:0.15rem;
+				width: 0.15rem;
+				float: right;
+				// background:pink;
+				margin-right: 0.05rem;
+				img
+					height:0.15rem;
+					width: 0.15rem;
+
 </style>
 
 

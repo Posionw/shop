@@ -1,82 +1,109 @@
 <template>
-	<div class="bg">
-		<ul class="list">
-			<li class="list_li">
-				<div class="list_li_t">
-					<img src="@/assets/images/Group6@2x.png" alt="">
-					<div class="time">2018-12-12 21:22:13</div>
-					<div class="pay">待付款</div>
-				</div>
-				<div class="list_li_c">
-					<div class="list_li_c_l">
-						<img src="@/assets/images/Group6@2x.png" alt="">
-					</div>
-					<div class="list_li_c_r">
-						<div class="list_li_name">飞羽跑asd步dasfdsf鞋撒发射点发啊第三方大发生大</div>
-						<div class="list_li_size">
-							<span>黑色</span><span>L/165</span>
+	<div class="bg" style="height:5.7rem;overflow: scroll;">
+		<mt-loadmore
+			:autoFill="autoFill"
+			:bottom-all-loaded="allLoaded"
+			:bottom-method="loadBottom"
+			ref="loadmore">
+			<ul class="list">
+				<template v-if="list.length>0">
+					<li class="list_li" v-for="(item,index) in list">
+						<div class="list_li_t">
+							<img src="@/assets/images/time.png" alt="">
+							<div class="time">{{item.createTime}}</div>
+							<div v-if="item.orderStatus==1" class="pay">待付款</div>
+							<div v-else-if="item.orderStatus==2" class="pay">已取消</div>
+							<div v-else="item.orderStatus==3" class="pay">已完成</div>
 						</div>
-						<div class="list_li_price">¥329</div>
-					</div>
-				</div>
-				<div class="list_li_b">
-					<div class="list_li_num">共1件商品</div>
-					<div class="list_li_totle">实付：¥770</div>
-					<div class="list_li_pay">去付款</div>
-				</div>
-			</li>
-			<li class="list_li">
-				<div class="list_li_t">
-					<img src="@/assets/images/Group6@2x.png" alt="">
-					<div class="time">2018-12-12 21:22:13</div>
-					<div class="pay">待付款</div>
-				</div>
-				<div class="list_li_c">
-					<div class="list_li_c_l">
-						<img src="@/assets/images/Group6@2x.png" alt="">
-					</div>
-					<div class="list_li_c_r">
-						<div class="list_li_name">飞羽跑asd步dasfdsf鞋撒发射点发啊第三方大发生大</div>
-						<div class="list_li_size">
-							<span>黑色</span><span>L/165</span>
+						<div class="list_li_c" v-for="(ite,i) in item.orderGoodsList">
+							<router-link :to="'/Detail/'+ite.goodsId">
+								<div class="list_li_c_l">
+									<img :src="ite.imgUrls" alt="">
+								</div>
+							</router-link>
+							<div class="list_li_c_r">
+								<div class="list_li_name">{{ite.goodsName}}</div>
+								<div class="list_li_size">
+									<span>{{ite.goodsOption1}}</span>
+									<span>/{{ite.goodsOption2}}</span>
+									<span>/{{ite.goodsNumber}}件</span>
+								</div>
+								<div class="list_li_price">¥{{ite.goodsPrice}}</div>
+							</div>
 						</div>
-						<div class="list_li_price">¥329</div>
-					</div>
-				</div>
-				<div class="list_li_b">
-					<div class="list_li_num">共1件商品</div>
-					<div class="list_li_totle">实付：¥770</div>
-					<div class="list_li_pay">去付款</div>
-				</div>
-			</li>
-		</ul>
+						<div class="list_li_b">
+							<div class="list_li_num">共{{item.orderGoodsList.length}}件商品</div>
+							<div class="list_li_totle">实付：¥{{item.orderMoney}}</div>
+							<div class="list_li_pay">去付款</div>
+						</div>
+					</li>
+				</template>
+				<template v-else>
+					<li class="list_li">
+						<div class="moren">
+							<img src="@/assets/images/wu.png" alt="">
+						</div>
+					</li>
+				</template>
+			</ul>
+		</mt-loadmore>
 	</div>
 </template>
 <script>
-	import {TabContainer, TabContainerItem} from 'mint-ui';
+	import {TabContainer, TabContainerItem, Loadmore, Indicator} from 'mint-ui';
 	import { mapState,mapMutations } from 'vuex';
 	export default{
 		name:'myorder-list',
+		props:{
+			list:'',
+			loadmore:''
+		},
 		components:{
 			TabContainer,
-			TabContainerItem
+			TabContainerItem,
+			Loadmore,
+			Indicator
 		},
 		data(){
 			return{
 				active:0,
-				swipeable:true
+				swipeable:true,
+				autoFill:false,
+				autoLoaded:false,
+				page:1,
+				loading:true,
+				top:0,
+				allLoaded:false
 			}
 		},
 		computed:{
 			...mapState(['orderIndex']),
 		},
+		methods:{
+			loadTop() {
+			  this.$refs.loadmore.onTopLoaded();
+			},
+			loadBottom() {
+			  this.page+=1
+			  this.$emit('page',this.page)
+			  this.$refs.loadmore.onBottomLoaded();
+			},
+		},
 		watch:{
 			orderIndex(){
 				this.active=this.orderIndex
 				console.log(this.orderIndex)
+			},
+			loadmore(){
+				console.log(this.loadmore)
+				if(this.loadmore==0){
+					this.allLoaded = true;         //判断是否加载完成
+				}
 			}
+
 		},
 		mounted(){
+			console.log(this.list)
 			console.log(this.active)
 			console.log(this.orderIndex)
 		}
@@ -89,10 +116,15 @@
 		.list
 			margin-top:10px;
 			.list_li
-				height:2.15rem;
+				min-height:2.15rem;
 				width: 100%;
 				margin-bottom: 0.15rem;
 				background:#fff;
+				.moren
+					margin:0 auto;
+					background:#f5f5f5;
+					text-align: center;
+					margin-top:1.5rem;
 				.list_li_t
 					height:0.45rem;
 					width: 3.45rem;
@@ -117,7 +149,7 @@
 						font-size: 0.12rem;
 						color:rgb(245,58,58)
 				.list_li_c
-					height:1.24rem;
+					min-height:1.24rem;
 					width: 3.45rem;
 					padding: 0 0.15rem;
 					border-bottom: 0.01rem solid rgb(213,213,219);

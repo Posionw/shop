@@ -1,28 +1,31 @@
 <template>
 	<div style="height:5.7rem;overflow: scroll;">
-		<mt-loadmore   :autoFill="autoFill" :bottom-method="loadBottom"  ref="loadmore">
-		  <ul class="list">
-		  	<template v-if="z_list.length > 1">
-		    <li class="list_card" v-for="(item,index) in z_list" :key="index">
-		    	<router-link :to="'/Detail/'+item.goodsId">
-			    	<div class="card_t">
-			    		<img :src="item.imgUrls" alt="">
-			    	</div>
-			    	<div class="card_b">
-			    		<div class="card_title">{{item.goodsName}}</div>
-			    		<div class="card_price">¥{{item.goodsPrice}}</div>
-			    	</div>
-		    	</router-link>
-		    </li>
-		    </template>
-		    <template v-else>
-			    <li class="loading">
-			    	<div class="loading_t">
-			    		<img src="@/assets/images/Group.png" alt="">
-			    	</div>
-			    	<div class="loading_b">正在努力加载中，请稍候...</div>
-			    </li>
-		    </template>
+		<mt-loadmore
+			:autoFill="autoFill"
+			:bottom-method="loadBottom"
+			ref="loadmore">
+		  	<ul class="list">
+		  		<template v-if="z_list.length > 0">
+			    	<li class="list_card" v-for="(item,index) in z_list" :key="index">
+			    		<router-link :to="'/Detail/'+item.goodsId">
+				    		<div class="card_t">
+				    			<img :src="item.imgUrls" alt="">
+				    		</div>
+				    		<div class="card_b">
+				    			<div class="card_title">{{item.goodsName}}</div>
+				    			<div class="card_price">¥{{item.goodsSalePrice}}</div>
+				    		</div>
+			    		</router-link>
+			   		</li>
+		   		</template>
+		    	<template v-else>
+			   		<li class="loading">
+			    		<div class="loading_t">
+			    			<img src="@/assets/images/Group.png" alt="">
+			    		</div>
+			    		<div class="loading_b">正在努力加载中，请稍候...</div>
+			    	</li>
+		    	</template>
 		  </ul>
 		</mt-loadmore>
 	</div>
@@ -44,13 +47,15 @@
 				autoFill:false,
 				autoLoaded:false,
 				page:1,
-				loading:true
+				loading:true,
+				top:0
 			}
 		},
 		computed:{
 		    ...mapState({
 		      id:'id',
-		      tab:'tab'
+		      tab:'tab',
+		      cid:'cid'
 		    })
 		 },
 		methods:{
@@ -60,20 +65,21 @@
 			},
 			loadBottom() {
 			  this.page+=1
-			  this.getIndexData(this.tab)
+			  this.getIndexData(this.id)
 			  console.log('加载')
 			  this.allLoaded = true;// if all data are loaded
 			  this.$refs.loadmore.onBottomLoaded();
 			},
 			getIndexData(id){
-		      axios.get('/api/list.json?page='+this.page+'&goodsTypeId='+id)
+			axios.get('/ds-app/home/goodsList?page='+this.page+'&goodsTypeId='+id+'&landlordId='+this.cid)
 		  		  .then(this.handleGetDataSucc.bind(this))
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
 		  		console.log(res)
-		  		console.log(this.z_list)
+		  		console.log(res.data.data)
 		  		this.z_list= res.data.data.concat(this.z_list)
+		  		console.log(this.z_list)
 		  	},
 		  	handleGetDataErr(){
 		  		console.log("失败了")
@@ -81,7 +87,9 @@
 		},
 		mounted(){
 			if(this.tab==this.num){
-				this.getIndexData(this.tab)
+				console.log('1231324124214124124')
+				console.log(this.id)
+				this.getIndexData(this.id)
 			}
 		},
 		watch:{
@@ -89,10 +97,14 @@
 	    		if(this.tab==this.num){
 	    			console.log(this.z_list.length)
 	    			if(this.z_list.length<1){
-	    				this.getIndexData(this.tab)
+
+	    				this.getIndexData(this.id)
 	    			}
 	    			console.log(this.page)
 	    		}
+	    	},
+	    	z_list(){
+	    		console.log(this.z_list)
 	    	}
 	     }
 	}
@@ -100,6 +112,7 @@
 <style lang="stylus" scoped>
 	.list
 		flex:1;
+		margin-bottom: 0.1rem;
 		.loading
 			width:100%;
 			color:red;

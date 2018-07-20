@@ -1,11 +1,11 @@
 <template>
 		<ul class="homeNav" ref="homeNav">
-	      <li v-for="(item,index) in navbar"
-	      	:class="{active:index == tabIndex}"
-	      	@click="selectSort(item.goodsTypeId,index)"
-	          :key="index" class="navBarLi">
+	      	<li v-for="(item,index) in navbar"
+	      		:class="{active:index == tabIndex}"
+	      		@click="selectSort(item.goodsTypeId,index)"
+	        	:key="index" class="navBarLi">
 	        	{{item.goodsTypeName}}
-	      </li>
+	      	</li>
 	   </ul>
 </template>
 <script>
@@ -24,8 +24,12 @@
 	    computed:{
 		    ...mapState({
 		      tab:'tab',
-		      id:'id'
-		    })
+		      id:'id',
+		      cid:'cid'
+		    }),
+		    cId:function(){
+				return this.$route.query.cid
+			}
 		  },
 	    methods:{
 	    	...mapMutations(['changeTab','changId']),
@@ -38,12 +42,13 @@
 			    }
 			    this.scroll_left=s
 			    this.$refs.homeNav.scrollTo(s, this.$refs.homeNav.scrollTop);
-			    console.log(id)
 			    this.changeTab(index)
+			    console.log(id)
 			    this.changId(id)
 	    	},
 	    	getIndexData(){
-		      axios.get('/api/header.json')
+	    		console.log('**********************'+this.cid)
+	    		axios.get('/ds-app/home/goodsType?landlordId='+this.cId)
 		  		  .then(this.handleGetDataSucc.bind(this))
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
@@ -61,12 +66,10 @@
 	    },
 	     watch:{
 	     	tab(val,oldVal){
-	     		console.log(val,oldVal)
-	     		console.log('#######')
 	    		this.selectSort(this.id,this.tab)
 	    		this.tabIndex=this.tab
 	    	}
-	     }
+	     },
 	}
 </script>
 <style lang="stylus" scoped>
@@ -90,13 +93,13 @@
 	        height: 0.46rem;
 	        line-height: 0.46rem;
 	        width: 0.68rem;
-	        font-size: 16px;
+	        font-size: 0.16rem;
 	        a {
 	            color: #000;
 	        }
 	        .router-link-active {
 	            color: #d43d3d;
-	            font-size: 17px;
+	            font-size: 0.17rem;
 	            font-weight: bold;
 	        }
 	    }

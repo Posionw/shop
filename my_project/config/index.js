@@ -12,9 +12,14 @@ module.exports = {
     proxyTable: {
 
         '/': {
-            target: 'http://localhost:8080',
+            target: 'https://ys.leiyu0001.cn/xxnn',
+            changeOrigin: true,
+            // target: 'http://localhost:8080',
+            // pathRewrite: {
+            //   '/api': '/static'
+            // }
             pathRewrite: {
-              '/api': '/static'
+              '/ds-app': '/ds-app'
             }
           }
     },

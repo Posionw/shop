@@ -1,9 +1,13 @@
 <template>
 	<div class="product_list">
-		<swiper :options="swiperOption" ref="mySwiper" >
-	    <swiper-slide v-for="(item,index) in num" :key="index">
-	    	<list-li :num ="index"></list-li>
-	    </swiper-slide>
+		<swiper
+			:options="swiperOption"
+			ref="mySwiper" >
+		    <swiper-slide
+		    	v-for="(item,index) in num"
+		    	:key="index">
+		    	<list-li :num ="index"></list-li>
+		    </swiper-slide>
 	  </swiper>
 	</div>
 </template>
@@ -19,6 +23,7 @@
 	    data() {
 	      return {
 	      	swiperIndex:0,
+	      	header:'',
 	        swiperOption: {
 	          pagination: {
 	            el: '.swiper-pagination'
@@ -28,6 +33,10 @@
 			      console.log(this.swiper.activeIndex);
 			      this.swiperIndex=this.swiper.activeIndex
 			      this.changeTab(this.swiperIndex)
+			      console.log(this.header)
+			      console.log(this.header[this.swiperIndex].goodsTypeId)
+
+			      this.changId(this.header[this.swiperIndex].goodsTypeId)
 			    },
 			  },
 	        },
@@ -36,28 +45,32 @@
 	    },
 	    computed: {
 	      ...mapState({
-		      tab:'tab'
+		      tab:'tab',
+		      cid:'cid'
 		    }),
 	      swiper() {
 	        return this.$refs.mySwiper.swiper
-	      }
+	      },
+	      cId:function(){
+				return this.$route.query.cid
+		}
 	    },
 	    mounted() {
 	      // current swiper instance
 	      // 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
-	      console.log('this is current swiper instance object', this.swiper)
 	      this.swiper.slideTo(this.tab, 0, false)
 	      this.getIndexData()
 	    },
 	    methods:{
-	    	...mapMutations(['changeTab']),
+	    	...mapMutations(['changeTab','changId']),
 	    	getIndexData(){
-		      axios.get('/api/header.json')
+	    		axios.get('/ds-app/home/goodsType?landlordId='+this.cId)
 		  		  .then(this.handleGetDataSucc.bind(this))
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
-		  		console.log(res)
+		  		console.log(res.data.data)
+		  		this.header = res.data.data
 		  		this.num=res.data.data.length
 		  	},
 		  	handleGetDataErr(){

@@ -1,71 +1,43 @@
 <template>
 	<div>
 		<div class="collect">
-			<div class="collect_card">
-				<div class="collect_card_t">
-					<img src="@/assets/images/Group6@2x.png" alt="">
-				</div>
-				<div class="collect_card_b">
-					<div class="card_b_t">飞羽跑步鞋慢跑鞋子</div>
-					<div class="card_b_b">
-						<div class="price">¥329</div>
-						<div class="del_pic">
-							<img src="@/assets/images/del@2x.png" alt="">
+			<div class="collect_card"
+			     v-for="(item,index) in list">
+				 <router-link :to="'/Detail/'+item.goodsId">
+					 <div class="collect_card_t">
+						<img :src="item.imgUrls" alt="">
+					 </div>
+				</router-link>
+					 <div class="collect_card_b">
+						<div class="card_b_t">{{item.goodsName}}</div>
+						<div class="card_b_b">
+							<div class="price">¥{{item.goodsPrice}}</div>
+							<div class="del_pic"
+								 @click="handleClick(item.goodsId)">
+								<img src="@/assets/images/del@2x.png" alt="">
+							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="collect_card">
-				<div class="collect_card_t">
-					<img src="@/assets/images/Group6@2x.png" alt="">
-				</div>
-				<div class="collect_card_b">
-					<div class="card_b_t">飞羽跑步鞋慢跑鞋子</div>
-					<div class="card_b_b">
-						<div class="price">¥329</div>
-						<div class="del_pic">
-							<img src="@/assets/images/del@2x.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="collect_card">
-				<div class="collect_card_t">
-					<img src="@/assets/images/Group6@2x.png" alt="">
-				</div>
-				<div class="collect_card_b">
-					<div class="card_b_t">飞羽跑步鞋慢跑鞋子</div>
-					<div class="card_b_b">
-						<div class="price">¥329</div>
-						<div class="del_pic">
-							<img src="@/assets/images/del@2x.png" alt="">
-						</div>
-					</div>
-				</div>
+					 </div>
 			</div>
 		</div>
-		<div class="collect_card">
-				<div class="collect_card_t">
-					<img src="@/assets/images/Group6@2x.png" alt="">
-				</div>
-				<div class="collect_card_b">
-					<div class="card_b_t">飞羽跑步鞋慢跑鞋子</div>
-					<div class="card_b_b">
-						<div class="price">¥329</div>
-						<div class="del_pic">
-							<img src="@/assets/images/del@2x.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
 	</div>
 </template>
 <script>
 	export default {
-		name:'collect-card'
+		name:'collect-card',
+		props:{
+			list:''
+		},
+		methods:{
+			handleClick(id){
+				this.$emit('goodsId',id)
+			}
+		}
 	}
 </script>
 <style lang="stylus" scoped>
+.collect
+	margin-top:0.4rem;
 	.collect_card
 		height:2.3rem;
 		width: 1.62rem;
@@ -87,11 +59,17 @@
 			.card_b_t
 				width:1.42rem;
 				height: 0.18rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				word-wrap: break-word;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
 				font-size: 0.13rem;
 				margin: 0.1rem 0 0 0.1rem;
 				float: left;
 				// background:yellow;
-				overflow: hidden;
+				white-space: normal !important;
 			.card_b_b
 				width:1.42rem;
 				height: 0.17rem;

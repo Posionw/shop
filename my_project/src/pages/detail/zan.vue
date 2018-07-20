@@ -1,23 +1,33 @@
 <template>
 	<div class="zan">
-		<div @click="handleClick(2)" class="abc" :class="{active:tabIndex==2}">
+		<div @click="handleClick(true)"
+			 class="abc"
+			 :class="{active:tabIndex==true}">
 			<img  src="@/assets/images/sc@3x.png" alt="">
 		</div>
-		<div @click="handleClick(1)" class="abc" :class="{active:tabIndex==1}">
+		<div @click="handleClick(false)"
+			 class="abc"
+			 :class="{active:tabIndex==false}">
 			<img  src="@/assets/images/sc2@3x.png" alt="">
 		</div>
 	</div>
 </template>
 <script>
+	import axios from 'axios'
+	import { mapState } from 'vuex'
 	export default{
 		name:'detail-zan',
 		props:{
-			aid:''
+			aid:'',
+			goodsId:''
 		},
 		data(){
 			return{
-				tabIndex:1
+				tabIndex:false
 			}
+		},
+		computed:{
+			 ...mapState(['userId']),
 		},
 		methods:{
 			handleClick(tab){
@@ -25,12 +35,30 @@
 					this.tabIndex=tab
 				}
 				console.log(tab)
-				console.log(this.aid)
-			}
+				console.log(this.tabIndex)
+				this.getIndexData()
+			},
+			getIndexData(){
+	    		axios.get('/ds-app/home/collectGoods?goodsId='+this.goodsId+'&collectStatus='+this.tabIndex+'&userId='+this.userId)
+		  		  .then(this.handleGetDataSucc.bind(this))
+		  		  .catch(this.handleGetDataErr.bind(this))
+		  	},
+		  	handleGetDataSucc(res){
+		  		console.log(res)
+		  	},
+		  	handleGetDataErr(){
+		  		console.log("失败了")
+		  	}
 		},
 		mounted(){
-			this.tabIndex=this.aid
-			console.log(this.aid)
+		},
+		watch:{
+			aid(){
+				this.tabIndex=this.aid
+			},
+			userId(){
+				console.log(this.userId)
+			}
 		}
 	}
 </script>

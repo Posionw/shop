@@ -1,10 +1,14 @@
 <template>
 	<div class="button">
-		<div class="btn" @click="handlePic" :class="{active:tab == 1}" >
-			图片
+		<div class="btn"
+			 @click="handlePic"
+			 :class="{active:tab == 1}">
+			 图片
 		</div>
-		<div class="btn" @click="handleVideo" :class="{active:tab == 0}">
-			视频
+		<div class="btn"
+			 @click="handleVideo"
+			 :class="{active:tab == 0}">
+			 视频
 		</div>
 	</div>
 </template>

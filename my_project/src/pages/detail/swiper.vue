@@ -1,16 +1,12 @@
 <template>
-	<div>
+	<div class="swiper_k">
 		<swiper :options="swiperOption" ref="mySwiper">
-		    <!-- slides -->
-		    <swiper-slide v-for="(item,index) in list" :key="index">
+		    <swiper-slide v-for="(item,index) in swiper" :key="index">
 		    	<div class="banner">
-		    		<img src="@/assets/images/Group6@2x.png" alt="">
+		    		<img :src="item" alt="">
 		    	</div>
 		    </swiper-slide>
-		    <!-- Optional controls -->
 		    <div class="swiper-pagination"  slot="pagination"></div>
-		   <!--  <div class="swiper-button-prev" slot="button-prev"></div>
-		    <div class="swiper-button-next" slot="button-next"></div> -->
 	  </swiper>
 	</div>
 </template>
@@ -34,15 +30,20 @@
     },
     mounted(){
     	console.log(this.swiper)
-    	// console.log(this.list)
+    },
+    watch:{
+      swiper(){
+        console.log(this.swiper)
+      }
     }
   }
 </script>
 <style lang="stylus" scoped>
+.swiper_k
+  height:3.8rem;
 	.banner
 		height:3.8rem;
 		width: 3.75rem;
-		background: pink;
 		img
 			height:3.8rem;
 			width: 3.75rem;

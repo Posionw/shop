@@ -1,5 +1,5 @@
 <template>
-	<a class="m-tabbar-item" :class="{'is-active':isActive}" @click="$parent.$parent.$emit('input',id)">
+	<a class="m-tabbar-item" :class="{'is-active':isActive}" @click="handelclick(id)" >
 		<span class="m-tabbar-item-icon" v-show="!isActive">
 			<slot name="icon-normal"></slot>
 		</span>
@@ -12,6 +12,7 @@
 	</a>
 </template>
 <script>
+	import { mapState,mapMutations } from 'vuex'
 	export default{
 		name:'tabbar-item',
 		props: ['id'],
@@ -21,13 +22,21 @@
 			}
 		},
         computed: {
+        	...mapState(['tabbarIndex']),
            isActive(){
-               if(this.$parent.$parent.value===this.id){
+               if(this.tabbarIndex===this.id){
                    return true;
                }
            }
+        },
+        methods:{
+        	...mapMutations(['changeTabbar']),
+        	handelclick(a){
+        		this.changeTabbar(a)
+        	}
         }
 	}
+	// @click="$parent.$parent.$emit('input',id)"
 </script>
 <style lang="stylus" scoped>
 	.m-tabbar-item{
@@ -35,16 +44,16 @@
 	    text-align: center;
 	    .m-tabbar-item-icon{
 	        display: block;
-	        padding-top: 2px;
+	        padding-top: 0.04rem;
 	        img{
-	            width: 28px;
-	            height: 28px;
+	            width: 0.24rem;
+	            height: 0.24rem;
 	        }
 
 	    }
 	    .m-tabbar-item-text{
 	        display: block;
-	        font-size: 10px;
+	        font-size: 0.12rem;
 	        color:#949494;
 	    }
 	    &.is-active{

@@ -1,47 +1,88 @@
 <template>
-	<div id="gwc">
-		<mt-cell-swipe
-		  :right="[
-		    {
-		      content: 'Delete',
-		      style: { background: 'red', color: '#fff' },
-		      handler: () => deleteSection(item)
-		    }
-		  ]"
-		   v-for="(item,index) in added"
-		   :key="index"
-		>
-		  	<div class="kuang">
-		  		<input class="kuang_l" type="radio" id="one" value="One" name="a" v-model="picked">
-		  		<div class="kuang_c">
-		  			<img src="@/assets/images/Group6@2x.png" alt="">
-		  		</div>
-		  		<div class="kuang_r">
-		  			<div class="title">{{item.goods.name}}</div>
-		  			<div class="size">
-		  				<div class="size_l">{{item.goods.picked}}</div>
-		  				<div class="size_r">{{item.goods.size}}</div>
-		  			</div>
-		  			<div class="price">
-		  				<div class="price_l">¥{{item.goods.price}}</div>
-		  				<div class="price_r">
-		  					<div class="price_r_l" @click.prevent="handlerJianClick(item)">-</div>
-		  					<div class="price_r_c">{{item.goods.num}}</div>
-		  					<div class="price_r_r" @click.prevent="handlerAddClick(item)">+</div>
-		  				</div>
-		  			</div>
-		  		</div>
-		  	</div>
-		</mt-cell-swipe>
+	<div id="gwc" style="padding-bottom: 1.1rem;">
 		<div class="kong" v-if="!added.length">
 			<div class="pic">
 				<img src="@/assets/images/gouwuche1@2x.png" alt="">
 			</div>
 		您的购物车空空如也...</div>
+		<div v-else>
+			<div v-for="(item,index) in added">
+			<div class="car_head">
+				<div class="car_head_l">
+					<img src="@/assets/images/sp.png" alt="">
+				</div>
+				<div class="car_head_r">{{item.goods.shopName}}</div>
+			</div>
+			<mt-cell-swipe
+			  :right="[
+			    {
+			      content: '删除',
+			      style: { background: '#20bcff', color: '#fff' },
+			      handler: () => deleteSection(item.goods.landlordId
+,ite)
+			    }
+			  ]"
+			   v-for="(ite,index) in item.goods.sp"
+			   :key="index"
+			>
+			  	<div class="kuang">
+			  		<template  v-if="ite.selected==true">
+			  			<div class="kuang_l" @click="handlerSelectClick(item.goods.landlordId
+,ite)">
+			  				<img src="@/assets/images/zhufu-choose3@2x.png" alt="" />
+			  			</div>
+			  		</template>
+			  		<template v-else>
+			  			<div class="kuang_l" @click="handlerSelectClick(item.goods.landlordId
+,ite)">
+			  				<img src="@/assets/images/zhufu-choose@2x.png" alt="" />
+			  			</div>
+			  		</template>
+			  		<!-- <input class="kuang_l" type="checkbox" id="one" :value="index" name="a" v-model="picked"> -->
+			  		<router-link :to="'/Detail/'+item.id">
+				  		<div class="kuang_c">
+				  			<img :src="ite.imgUrl" alt="">
+				  		</div>
+			  		</router-link>
+			  		<div class="kuang_r">
+			  			<div class="title">{{ite.name}}</div>
+			  			<div class="size">
+			  				<div class="size_l">{{ite.picked}}</div>
+			  				<div class="size_r">{{ite.size}}</div>
+			  			</div>
+			  			<div class="price">
+			  				<div class="price_l">¥{{ite.price}}</div>
+			  				<div class="price_r">
+			  					<div class="price_r_l" @click.prevent="handlerJianClick(item.goods.landlordId
+,ite)">-</div>
+			  					<div class="price_r_c">{{ite.num}}</div>
+			  					<div class="price_r_r" @click.prevent="handlerAddClick(item.goods.landlordId
+,ite)">+</div>
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+			</mt-cell-swipe>
+			</div>
+			<div class="footer">
+				<div class="quan" v-if="seleall==true" @click="handlerSelectAllClick">
+					<img src="@/assets/images/zhufu-choose3@2x.png" alt="" />
+				</div>
+				<div class="quan" v-else @click="handlerSelectAllClick">
+					<img src="@/assets/images/zhufu-choose@2x.png" alt="" />
+				</div>
+				<!-- <input class="quan" type="checkbox" @click="checkAll($event)"> -->
+				<div class="quanx">全选</div>
+				<div class="heji">合计：¥{{this.totalPrice}}</div>
+				<router-link to="Submit">
+					<div class="jiesuan" @click="handlePostClick">结算({{this.totalNum}})</div>
+				</router-link>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
-	import { mapState,mapMutations } from 'vuex'
+	import { mapState,mapMutations,mapActions,mapGetters } from 'vuex'
 	import { CellSwipe } from 'mint-ui';
 	export default{
 		name:'buycar',
@@ -50,46 +91,84 @@
 		},
 		data(){
 			return{
-				picked: '',
+				picked: [],
 				num:1,
-				carList:[]
+				carList:[],
+				dingdan:'',
 			}
 		},
 		computed:{
-			...mapState({
-		      added:'added'
-		    })
-		},
-		watch:{
-			picked(){
-				console.log('1')
-			}
+		    ...mapState(['added','selectedAl','userId']),
+		    ...mapGetters(['totalPrice','totalNum','seleall','order'])
 		},
 		methods:{
-			...mapMutations(['del', 'carAdd','carJian']),
-			handlerJianClick(a){
-				this.carJian(a)
+			...mapMutations(['del', 'carAdd','carJian','selectList']),
+			...mapActions(['selected','selectedAll']),
+			handlerJianClick(a,b){
+				this.carJian({a,b})
 			},
-			handlerAddClick(a){
-				 this.carAdd(a)
-			},
-			deleteSection(a){
+			handlerAddClick(a,b){
 				console.log(a)
-				this.del(a)
+				console.log(b)
+				 this.carAdd({a,b})
+			},
+			deleteSection(a,b){
+				console.log(a)
+				this.del({a,b})
+			},
+			handlerSelectClick(a,b){
+				this.selected({a,b})
+			},
+			handlerSelectAllClick(){
+				this.selectedAll()
+			},
+			handlePostClick(){
+				
 			}
 		},
 		mounted(){
 			// console.log(JSON.parse(this.added))
 			console.log(this.added)
-			console.log(this.added.length)
+			console.log(this.dingDan)
 			// console.log(this.carList)
-			// 
+		},
+		watch:{
+			picked(){
+				console.log(this.picked)
+			},
+			order(){
+				console.log(this.order)
+			}
 		}
 	}
 </script>
 <style lang="stylus" scoped>
+.car_head
+	height:0.3rem;
+	background:#f7f7f7;
+	.car_head_l
+		height:0.15rem;
+		width: 0.15rem;
+		margin-top: 0.07rem;
+		margin-left: 0.1rem;
+		// background:blue;
+		float: left;
+		img
+			height: 0.15rem;
+			width: 0.15rem;
+	.car_head_r
+		height:0.3rem;
+		line-height:0.3rem;
+		width: 3rem;
+		color:#000;
+		float: left;
+		font-size: 0.14rem;
+		margin-left: 0.1rem;
 .mint-cell
 	border-bottom:0.01rem solid #E5E5E5;
+	// .mint-cell-right
+	// 	.mint-cell-swipe-button
+	// 			line-height:128px!important;
 	.kuang
 		height:1rem;
 		width: 3.75rem;
@@ -100,6 +179,9 @@
 			width: 0.16rem;
 			margin-top: 0.4rem;
 			float: left;
+			img
+				height:0.16rem;
+				width: 0.16rem;
 		.kuang_c
 			height:1rem;
 			width: 1rem;
@@ -200,6 +282,45 @@
 		img
 			height:1rem;
 			width: 1rem;
+.footer
+	height:0.6rem;
+	width: 100%;
+	position:fixed;
+	bottom:0.5rem;
+	background:#fff;
+	.quan
+		height:0.16rem;
+		width: 0.16rem;
+		border-radius: 50%;
+		margin:0.21rem 0.1rem;
+		float: left;
+		img
+			height:0.16rem;
+			width: 0.16rem;
+	.quanx
+		height:0.6rem;
+		line-height: 0.6rem;
+		float: left;
+		// background:pink;
+		font-size: 0.14rem;
+		color: #21283E;
+	.heji
+		height:0.6rem;
+		line-height: 0.6rem;
+		float: left;
+		// background:pink;
+		font-size: 0.14rem;
+		color: #21283E;
+		margin-left:0.32rem;
+	.jiesuan
+		height:0.6rem;
+		width: 1.3rem;
+		background:#20BCFF;
+		float: right;
+		line-height: 0.6rem;
+		text-align: center;
+		color:#fff;
+		font-size: 0.16rem;
 </style>
 
 

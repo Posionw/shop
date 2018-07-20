@@ -1,17 +1,18 @@
 <template>
 	<div class="app">
-    	<router-view/>
-    	<!-- <z-tabbar></z-tabbar> -->
-    </div>
+    <keep-alive>
+    	<router-view v-if="$route.meta.keepAlive" />
+    </keep-alive>
+     <router-view v-if="!$route.meta.keepAlive"></router-view>
+  </div>
 
 </template>
 <script>
-import zTabbar from '@/components/tabbar/z-tabber.vue'
 export default {
   name: 'App',
   components:{
-	zTabbar
-  }
+  },
+
 }
 </script>
 
@@ -23,4 +24,5 @@ export default {
     z-index: 999999;
     width: 1.2rem;
   }
+
 </style>

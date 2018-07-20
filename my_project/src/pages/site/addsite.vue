@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<router-link to="Changesite">
+		<router-link to="/Changesite/*">
 			<div class="button">新增地址</div>
 		</router-link>
 	</div>
@@ -16,7 +16,7 @@
 		bottom: 0;
 		height: 0.5rem;
 		width: 100%;
-		background:#3792EB;
+		background:#20bcff;
 		color:#fff;
 		text-align: center;
 		line-height: 0.5rem;
