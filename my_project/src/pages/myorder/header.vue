@@ -45,7 +45,7 @@
 		margin-top:0.4rem;
 		box-szing:border-box;
 	.list
-		margin-top:10px;
+		margin-top:0.1rem;
 </style>
 
 

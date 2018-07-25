@@ -6,6 +6,9 @@ import router from './router'
 import FastClick from 'fastclick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import Mint from 'mint-ui';
+import VideoPlayer from 'vue-video-player'
+require('video.js/dist/video-js.css')
+require('vue-video-player/src/custom-theme.css')
 import '@/assets/css/rest.css'
 import '@/assets/icon/iconfont.css'
 import '@/assets/js/flexible.js'
@@ -19,6 +22,7 @@ Vue.config.productionTip = false
 FastClick.attach(document.body);
 Vue.use(VueAwesomeSwiper)
 Vue.use(Mint);
+Vue.use(VideoPlayer)
 
 /* eslint-disable no-new */
 new Vue({

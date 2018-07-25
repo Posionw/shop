@@ -1,5 +1,5 @@
 <template>
-	<div style="height:5.7rem;overflow: scroll;">
+	<div style="height:100%;overflow: scroll;">
 		<mt-loadmore
 			:autoFill="autoFill"
 			:bottom-method="loadBottom"
@@ -76,10 +76,10 @@
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
-		  		console.log(res)
-		  		console.log(res.data.data)
+		  		// console.log(res)
+		  		// console.log(res.data.data)
 		  		this.z_list= res.data.data.concat(this.z_list)
-		  		console.log(this.z_list)
+		  		// console.log(this.z_list)
 		  	},
 		  	handleGetDataErr(){
 		  		console.log("失败了")
@@ -87,24 +87,20 @@
 		},
 		mounted(){
 			if(this.tab==this.num){
-				console.log('1231324124214124124')
-				console.log(this.id)
+				// console.log(this.id)
 				this.getIndexData(this.id)
 			}
 		},
 		watch:{
 	    	tab(){
 	    		if(this.tab==this.num){
-	    			console.log(this.z_list.length)
 	    			if(this.z_list.length<1){
 
 	    				this.getIndexData(this.id)
 	    			}
-	    			console.log(this.page)
 	    		}
 	    	},
 	    	z_list(){
-	    		console.log(this.z_list)
 	    	}
 	     }
 	}

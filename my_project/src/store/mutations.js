@@ -139,6 +139,84 @@ export default {
 
       var data = JSON.stringify(state.added)
       localStorage.setItem("car", data);
+    },
+    // 清购物车
+    cleanTrue(state,a){
+      // if(a==1){
+      //    console.log(state.added)
+      //   console.log('对')
+      // var arr = state.added
+      // arr.forEach((n,i)=>{
+      //   console.log(n)
+      //   n.goods.sp.forEach((m,j) => {
+      //     console.log(m)
+      //     if(m.selected == true){
+      //       console.log('当前j'+j)
+      //        n.goods.sp.splice(j,1)
+      //     }
+      //    //  if(n.goods.sp.length==0){
+      //    //    arr.splice(i,1)
+      //    // }
+      //   })
+      // })
+      // }
+
+      // // var data = JSON.stringify(state.added)
+      // // localStorage.setItem("car", data);
+      // console.log(state.added)
+
+
+
+    var arr = []
+    state.added.forEach((n,i) => {
+      console.log(n)
+      n.goods.sp.forEach((m,j)=>{
+        console.log(m)
+        if(m.selected==false){
+          console.log(arr[0])
+          // console.log(arr)
+          if(arr.length == 0){
+            arr.push({
+              goods:{
+                landlordId:n.goods.landlordId,
+                shopName:n.goods.shopName,
+                sp:[
+                  m
+                ]
+              }
+            })
+          }else{
+            console.log(arr)
+            var a = 0;
+            arr.forEach((o,l)=>{
+              if(o.goods.landlordId == n.goods.landlordId){
+                a++
+                o.goods.sp.push(m)
+              }
+
+            })
+            if(a==0){
+              arr.push({
+                goods:{
+                  landlordId:n.goods.landlordId,
+                  shopName:n.goods.shopName,
+                  sp:[
+                    m
+                  ]
+                }
+              })
+            }
+          }
+        }
+      })
+    })
+
+    state.added = arr
+
+    var data = JSON.stringify(state.added)
+    localStorage.setItem("car", data);
+
+
     }
 }
 

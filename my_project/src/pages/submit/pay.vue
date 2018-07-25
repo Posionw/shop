@@ -51,7 +51,7 @@
 		height:0.3rem;
 		width: 100%;
 		line-height: 0.3rem;
-		// background:pink;
+		background:#f7f7f7;
 		p
 			font-family: PingFangSC-Regular;
 			font-size:0.14rem;

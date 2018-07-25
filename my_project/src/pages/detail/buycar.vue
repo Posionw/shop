@@ -10,7 +10,7 @@
 		  				<img :src="imgUrl" alt="">
 		  			</div>
 		  			<div class="top_title">
-		  				<div class="top_title_t">{{title}}</div>
+		  				<div class="top_title_t">{{title}}<span style="margin-left:0.05rem">({{kucunnum}})</span></div>
 		  				<div class="top_price">¥{{price}}</div>
 		  			</div>
 		  		</div>
@@ -138,15 +138,16 @@
     		goodsFormats2data:'',		//筛选2选项
     		imgUrl:'',					//默认图片
     		landlordId:'',				//房东id
-    		shopName:''					//店铺名
+    		shopName:'',				//店铺名
+    		kucunnum:''					//库存
     	},
 		data(){
 			return{
 				popupVisible:false,		//是否展示购物车
 				picked:'',				//筛选1的值
 				size:'',				//筛选2的值
-				selectIndex:'999',		//筛选1下标
-				selectIndex2:'999',		//筛选2下标
+				selectIndex:'',		//筛选1下标
+				selectIndex2:'',		//筛选2下标
 				num:0,					//数量
 			}
 		},
@@ -169,11 +170,11 @@
   					this.num=0
   				}
 			},
-			handleSelect(index,id,state,img){				//点击筛选1
+			handleSelect(index,id,state,img){						//点击筛选1
 				if(state == 1){
-					if(this.selectIndex==id){           //此处判断为取消
-						this.selectIndex='999'			//删除选中
-						this.picked = ''				//取消重新赋值
+					if(this.selectIndex==id){           			//此处判断为取消
+						this.selectIndex=''						//删除选中
+						this.picked = ''							//取消重新赋值
 						this.$emit('infoFormatId1',{id:id,state:0}) //传给父级id及取消事件
 					}else{
 						this.selectIndex=id 						//重新赋值id选中状态
@@ -181,56 +182,48 @@
 						console.log(img)
 
 					}
+					this.$emit('kucun',{selectIndex2:this.selectIndex2,selectIndex:this.selectIndex,goodsId:this.goodsId})
 				}
-				console.log(id)
+				// console.log(id)
 			},
 			handleSelect2(index,id,state,img){				//点击筛选2
-				console.log(id)
-				console.log(this.selectIndex2)
-				if(state==1){							//判断是否有货
-					if(this.selectIndex2==id){			//判断是否取消
-						this.selectIndex2='999'			//取消重新赋值
-						this.size = ''					//选中状态重新赋值
+				if(state==1){										//判断是否有货state=1有货
+					if(this.selectIndex2==id){						//判断是否取消
+						this.selectIndex2=''						//取消重新赋值
+						this.size = ''								//选中状态重新赋值
 						this.$emit('infoFormatId2',{id:id,state:0}) //传给父级id及取消事件
 					}else{
-						this.selectIndex2=id 						//重新赋值id选中状态
+						this.selectIndex2=id 						       //点击赋值id选中状态
 						this.$emit('infoFormatId2',{id:id,state:1,img:img}) //传给父级id及点击事件
 					}
 				}
-				console.log(id)
+				if(this.picked!=''){
+				this.$emit('kucun',{selectIndex2:this.selectIndex2,selectIndex:this.selectIndex,goodsId:this.goodsId})
+				}
+				// console.log(id)
 			},
 			buyNow(){
 				console.log(this.goods)
 				if(this.goodsFormats2data.length==0){					//判断如果只有选项1的情况
 					console.log(this.goods.sp[0].num)
-					//原写法》》》》》》》》》》》》》》》》》
-					// if(this.goods.num>0 && this.picked!=''){
-					// 	Toast({
-					// 	  message: '填加成功',
-					// 	  className:'tan1',
-					// 	  duration: 1000,
-					// 	  iconClass: 'iconfont icon-right'
-					// 	});
-					// 	this.add(this.goods)
-					// 	console.log(this.goods.picked)
-					// }else{
-					// 	Toast({
-					// 	  message: '请完善选项',
-					// 	  className:'tan1',
-					// 	  duration: 1000
-					// 	});
-					// }
-					// 结束》》》》》》》》》》》》》》》》》》》》
-					// 新写法》》》》》》》》》》》》》》》》》》》
 					if(this.goods.sp[0].num>0 && this.picked!=''){
-						Toast({
-						  message: '填加成功',
-						  className:'tan1',
-						  duration: 1000,
-						  iconClass: 'iconfont icon-right'
-						});
-						this.add(this.goods)
-						console.log(this.goods.picked)
+						console.log(this.picked,this.size,this.num)
+						if(this.num>this.kucunnum){
+							Toast({
+							  message: '库存不足',
+							  className:'tan1',
+							  duration: 1000,
+							  iconClass: 'iconfont icon-right'
+							});
+						}else{
+							Toast({
+							  message: '填加成功',
+							  className:'tan1',
+							  duration: 1000,
+							  iconClass: 'iconfont icon-right'
+							});
+							this.add(this.goods)
+						}
 					}else{
 						Toast({
 						  message: '请完善选项',
@@ -238,19 +231,25 @@
 						  duration: 1000
 						});
 					}
-					// 新写法结束》》》》》》》》》》》》》》》》》》
 
 				}else{
-					//原写法开始 》》》》》》》》》》》》》》》》》》》》》》》》》》
-					if(this.goods.num>0 && this.picked!=''&&this.size!='' ){//判断数量选项1选项2不为空
-					Toast({
-					  message: '填加成功',
-					  className:'tan1',
-					  duration: 1000,
-					  iconClass: 'iconfont icon-right'
-					});
-					this.add(this.goods)
-					console.log(this.goods.picked)
+					if(this.goods.sp[0].num>0 && this.picked!=''&&this.size!='' ){//判断数量选项1选项2不为空
+						if(this.num>this.kucunnum){
+							Toast({
+							  message: '库存不足',
+							  className:'tan1',
+							  duration: 1000,
+							  iconClass: 'iconfont icon-right'
+							});
+						}else{
+							Toast({
+							  message: '填加成功',
+							  className:'tan1',
+							  duration: 1000,
+							  iconClass: 'iconfont icon-right'
+							});
+							this.add(this.goods)
+						}
 					}else{
 						Toast({
 						  message: '请完善选项',
@@ -258,7 +257,6 @@
 						  duration: 1000
 						});
 					}
-					//原写法结束 》》》》》》》》》》》》》》》》》》》》》》》》》》
 				}
 			}
 		},
@@ -273,14 +271,8 @@
 					document.documentElement.style.overflowY = 'scroll';
 				}
 			},
-			// goodsFormats1(){							//对选项第一项默认赋值
-			// 	console.log(this.goodsFormats1)
-			// },
-			// goodsFormats2(){							//对选项第二项默认赋值
-			// 	console.log(this.goodsFormats2)
-			// },
 			goodsFormats2data(){
-				console.log(this.goodsFormats2data)
+				// console.log(this.goodsFormats2data)
 				let item = this.goodsFormats2data.find(n=>n.status == 0);
 				if(item){
 					var a = item.infoFormatId
@@ -292,7 +284,7 @@
 				}
 			},
 			goodsFormats1data(){
-				console.log(this.goodsFormats1data)
+				// console.log(this.goodsFormats1data)
 				let item = this.goodsFormats1data.find(n=>n.status == 0);
 				if(item){
 					var a = item.infoFormatId
@@ -304,7 +296,7 @@
 			}
 		},
 		mounted(){
-			console.log(this.list)
+			// console.log(this.list)
 		}
 	}
 </script>

@@ -99,6 +99,9 @@
 				if(this.loadmore==0){
 					this.allLoaded = true;         //判断是否加载完成
 				}
+			},
+			list(){
+				console.log(this.list)
 			}
 
 		},

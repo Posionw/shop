@@ -43,7 +43,6 @@
 			    this.scroll_left=s
 			    this.$refs.homeNav.scrollTo(s, this.$refs.homeNav.scrollTop);
 			    this.changeTab(index)
-			    console.log(id)
 			    this.changId(id)
 	    	},
 	    	getIndexData(){
@@ -79,6 +78,7 @@
 	    overflow-x: auto;
 	    text-align: center;
 	    position: fixed;
+	    top: 0.46rem;
 	    left: 0;
 	    font-size: 0;
 	    background: #f4f5f6;

@@ -14,5 +14,9 @@ export default {
     // 修改房东id
     changCi(context,id){
         context.commit("changeCid",id)
+    },
+    //提交订单
+    zSubmit(context){
+        context.commit("cleanTrue")
     }
 }

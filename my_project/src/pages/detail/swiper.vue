@@ -29,11 +29,11 @@
       }
     },
     mounted(){
-    	console.log(this.swiper)
+    	// console.log(this.swiper)
     },
     watch:{
       swiper(){
-        console.log(this.swiper)
+        // console.log(this.swiper)
       }
     }
   }

@@ -21,6 +21,7 @@
 		overflow: hidden;
 		height: 0.5rem;
 		border-top:0.01rem solid #e4e4e4;
+		z-index: 9;
 		// justify-content:space-around;
 	}
 </style>

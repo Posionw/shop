@@ -3,14 +3,15 @@
 		<z-header>我的订单</z-header>
 		<submit-site :address="address"></submit-site>
 		<submit-pay></submit-pay>
-		<submit-list 
+		<!-- <div @click="handle">adsfasfd</div> -->
+		<submit-list
 					 :totalPrice="totalPrice"
 					 :list="list"
+					 @yhq="handleGetYhhData"
 					 :totalNum="totalNum">
 		</submit-list>
-		<submit-yhj></submit-yhj>
-		<submit-footer :totalPrice="totalPrice"
-					   :totalNum="totalNum">
+		<submit-footer :list="list"
+					   @pay="handleGetPayData">
 		</submit-footer>
 	</div>
 </template>
@@ -36,56 +37,36 @@
 		},
 		data(){
 			return {
-				address:'',
-				list:''
+				address:'',														//地址信息
+				list:''															//商品列表
 			}
 		},
 		computed:{
-			 ...mapState(['userId']),
+			 ...mapState(['userId','cid']),
 			 ...mapGetters(['order','totalNum','totalPrice']),
 			 goods(){
 		    	return {
-		    		userId:this.userId,
-		    		sp:this.order
+		    		userId:this.userId,											//userid
+		    		sp:this.order 												//订单信息
 		    	}
 		    }
 		},
 		methods:{
-			getIndexData(){ 										//获取收获地址数据
-		  		axios.get('/ds-app/address/getDefaultAddress?userId=1')
+			...mapActions(['zSubmit']),
+			...mapMutations(['cleanTrue']),
+			getIndexData(){ 													//获取收获地址数据
+		  		axios.get('/ds-app/address/getDefaultAddress?userId='+this.userId)
 		  		  .then(this.handleGetDataSucc.bind(this))
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
-		  		console.log(res)
+		  		// console.log(res)
 		  		this.address = res.data.data
 		  	},
 		  	handleGetDataErr(res){
-		  		console.log(res)
+		  		// console.log(res)
 		  	},
-		  	getCounponData(){ 										//获取优惠券数据
-		  		axios.get('/ds-app/coupon/getCounponByGoodsAndUser?userId=1')
-		  		  .then(this.handleGetDataSucc1.bind(this))
-		  		  .catch(this.handleGetDataErr1.bind(this))
-		  	},
-		  	handleGetDataSucc1(res){
-		  		console.log(res)
-		  	},
-		  	handleGetDataErr1(res){
-		  		console.log(res)
-		  	},
-		  	getYhjData(){
-		  		axios.get('/ds-app/coupon/getCounponByGoodsAndUser?userId=1')
-		  		  .then(this.handleGetDataSucc2.bind(this))
-		  		  .catch(this.handleGetDataErr2.bind(this))
-		  	},
-		  	handleGetDataSucc2(res){
-		  		console.log(res)
-		  	},
-		  	handleGetDataErr2(res){
-		  		console.log(res)
-		  	},
-		  	getListData(params){
+		  	getListData(params){												//进入页面获取列表数据
 		  		axios.post('/ds-app/order/settlementOrder',qs.stringify({
 	    				param:params,
 	    		}))
@@ -93,27 +74,64 @@
 		  		  .catch(this.handleGetListDataErr.bind(this))
 		  	},
 		  	handleGetListDataSucc(res){
-		  		console.log(res)
-		  		console.log(res.data.data.sp)
-		  		this.list = res.data.data.sp
+		  		// console.log(res)
+		  		this.list = res.data.data.sp 									//商品信息进行赋值
 		  	},
 		  	handleGetListDataErr(res){
-		  		console.log(res)
-		  	}
+		  		// console.log(res)
+		  	},
+		  	getYhListData(params){												//获取传入优惠券id返回列表
+		  		axios.post('/ds-app/order/settlementOrderCoupon',qs.stringify({
+	    				param:params,
+	    		}))
+		  		  .then(this.handleGetYhListDataSucc.bind(this))
+		  		  .catch(this.handleGetYhListDataErr.bind(this))
+		  	},
+		  	handleGetYhListDataSucc(res){
+		  		// console.log(res)
+		  		this.list = res.data.data.sp
+		  	},
+		  	handleGetYhListDataErr(res){
+		  		// console.log(res)
+		  	},
+		  	getOrderData(total,good){											//获取支付id接口
+		  		axios.post('/ds-app/order/createPayOrder',qs.stringify({
+	    				param:good,												//商品信息
+	    				payMoney:total,											//计算总价
+	    				userId:this.userId,										//用户id
+	    				addressId:this.address.addressId,						//地址id
+	    		}))
+		  		  .then(this.handleGetOrderDataSucc.bind(this))
+		  		  .catch(this.handleGetOrderDataErr.bind(this))
+		  	},
+		  	handleGetOrderDataSucc(res){
+		  		// console.log(res)
+		  		this.cleanTrue(1)
+		  	},
+		  	handleGetOrderDataErr(res){
+		  		// console.log(res)
+		  	},
+		  	handleGetYhhData(id){												//点击优惠券请求数据
+		  		this.getYhListData(id)
+		  	},
+		  	handleGetPayData(total){											//点击支付调用支付订单接口
+		  		var good = JSON.stringify(this.list)							//total为支付总价
+		  		this.getOrderData(total,good)
+		  	},
+		  	// handle(){
+		  	// 	this.cleanTrue(1)
+		  	// }
 
 		},
 		watch:{
 			order(){
-				console.log(this.order)
+				// console.log(this.order)
 			}
 		},
 		mounted(){
 			this.getIndexData()
-			console.log(this.order)
-			// console.log(this.goods)
 			var good = JSON.stringify(this.goods)
-			// console.log(good)
-			this.getListData(good)
+			this.getListData(good)								//进入页面默认获取商品列表数据
 
 		}
 
@@ -134,3 +152,29 @@
 		  	// 	// window.open("https://www.baidu.com")
 		  	// 	this.$refs.ss.src="https://www.baidu.com"
 		  	// }-->
+
+
+
+
+	<!-- getCounponData(){ 										//获取优惠券数据
+		  	// 	axios.get('/ds-app/coupon/getCounponByGoodsAndUser?userId='+this.userId)
+		  	// 	  .then(this.handleGetDataSucc1.bind(this))
+		  	// 	  .catch(this.handleGetDataErr1.bind(this))
+		  	// },
+		  	// handleGetDataSucc1(res){
+		  	// 	console.log(res)
+		  	// },
+		  	// handleGetDataErr1(res){
+		  	// 	console.log(res)
+		  	// },
+		  	// getYhjData(){
+		  	// 	axios.get('/ds-app/coupon/getCounponByGoodsAndUser?userId='+this.userId)
+		  	// 	  .then(this.handleGetDataSucc2.bind(this))
+		  	// 	  .catch(this.handleGetDataErr2.bind(this))
+		  	// },
+		  	// handleGetDataSucc2(res){
+		  	// 	console.log(res)
+		  	// },
+		  	// handleGetDataErr2(res){
+		  	// 	console.log(res)
+		  	// },-->

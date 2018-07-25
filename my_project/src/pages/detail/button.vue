@@ -24,12 +24,12 @@
 			handleVideo(){
 				this.tab = 0
 				this.$emit('tabVideo',this.tab)
-				console.log(this.tab)
+				// console.log(this.tab)
 			},
 			handlePic(){
 				this.tab = 1
 				this.$emit('tabPic',this.tab)
-				console.log(this.tab)
+				// console.log(this.tab)
 			}
 		}
 	}

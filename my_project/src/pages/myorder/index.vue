@@ -64,4 +64,5 @@
 <style lang="stylus" scoped>
 	.order
 		height:100%;
+		overflow: hidden;
 </style>

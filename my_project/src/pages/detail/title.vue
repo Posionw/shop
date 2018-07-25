@@ -80,26 +80,27 @@
 <style lang="stylus" scoped>
 	.title
 		height:0.9rem;
-		width: 100%;
-		// background:pink;
+		// width: 100%;
+		background:pink;
 		overflow: hidden;
 		background: #FFFFFF;
 		box-shadow: 0px 4px 12px 0px rgba(174,201,205,0.30);
 		.title_t
-			height:0.2rem;
-			line-height: 0.2rem;
-			width:3.05rem
 			font-size: 0.18rem;
-			color: #353535;
+			height:0.2rem;
+			line-height: 0.21rem;
+			width:3.05rem;
 			margin: 0 auto;
 			margin-top: 0.19rem;
-			display: -webkit-box; /*将对象作为弹性伸缩盒子模型显示*/
-		    overflow: hidden;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			display: -webkit-box;
+		    color: #353535;
+		    // background:red;
 		    white-space: normal !important;
-		    text-overflow: ellipsis;
-		    word-wrap: break-word;
-		    -webkit-line-clamp: 1; /*限制在一个块元素显示的文本的行数*/
-		    -webkit-box-orient: vertical;
 		.title_b
 			height:0.2rem;
 			line-height: 0.2rem;

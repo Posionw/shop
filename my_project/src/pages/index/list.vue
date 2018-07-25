@@ -33,9 +33,8 @@
 			      console.log(this.swiper.activeIndex);
 			      this.swiperIndex=this.swiper.activeIndex
 			      this.changeTab(this.swiperIndex)
-			      console.log(this.header)
-			      console.log(this.header[this.swiperIndex].goodsTypeId)
-
+			      // console.log(this.header)
+			      // console.log(this.header[this.swiperIndex].goodsTypeId)
 			      this.changId(this.header[this.swiperIndex].goodsTypeId)
 			    },
 			  },
@@ -69,7 +68,7 @@
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
-		  		console.log(res.data.data)
+		  		// console.log(res.data.data)
 		  		this.header = res.data.data
 		  		this.num=res.data.data.length
 		  	},
@@ -80,7 +79,7 @@
 	    watch:{
 	    	tab(){
 	    		this.swiper.slideTo(this.tab, 0, false)
-	    		console.log(this.tab)
+	    		// console.log(this.tab)
 	    	}
 	    }
 	}
@@ -90,9 +89,11 @@
 		flex:1;
 		width: 100%;
 		// background:pink;
-		margin-top: 0.46rem;
+		margin-top: 0.92rem;
+		// margin-top: 0.46rem;
 		.swiper-slide
-			height:5.7rem;
+			// height:5.7rem;
+			height:5.24rem;
 			.list_li
 				height:100%;
 				width: 100%;

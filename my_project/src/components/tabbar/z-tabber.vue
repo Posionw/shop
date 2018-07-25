@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="tabbar">
 		<!-- <keep-alive  include="index"> -->
 		<router-view />
 		<!-- </keep-alive>:to="'/Index?id='+userId+'&cid='+cid" -->

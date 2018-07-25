@@ -123,21 +123,21 @@
 				this.selectedAll()
 			},
 			handlePostClick(){
-				
+				console.log(this.order)
 			}
 		},
 		mounted(){
 			// console.log(JSON.parse(this.added))
-			console.log(this.added)
-			console.log(this.dingDan)
+			// console.log(this.added)
+			// console.log(this.dingDan)
 			// console.log(this.carList)
 		},
 		watch:{
 			picked(){
-				console.log(this.picked)
+				// console.log(this.picked)
 			},
 			order(){
-				console.log(this.order)
+				// console.log(this.order)
 			}
 		}
 	}

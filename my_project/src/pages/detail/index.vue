@@ -5,6 +5,8 @@
 		<component
 			:is="type"
 			list="123"
+			:videoUrl="videoUrl"
+			:imgUrl="imgUrl"
 			:swiper="swiper">
 		</component>
 		<detail-button
@@ -39,8 +41,10 @@
 			:goodsFormats2data="goodsFormats2data"
 			:landlordId="landlordId"
 			:shopName="shopName"
+			:kucunnum="kucunnum"
 			@infoFormatId1="handleSelect1"
 			@infoFormatId2="handleSelect2"
+			@kucun="handleGetKuCunClick"
 			:list="z_detail">
 		</detail-buycar>
 	</div>
@@ -90,7 +94,9 @@
 				goodsFormats2data:'',//筛选2数据
 				imgUrl:'',			 //默认图片
 				landlordId:'',		//房东id
-				shopName:''			//店铺名
+				shopName:'',		//店铺名
+				kucunnum:'',		//库存
+				videoUrl:'http://xxnnapp.test.upcdn.net/uploads/20180627/quardnerv2jat3ekqeias40pt6zu3kyx.tmp',			//视频
 			}
 		},
 		computed:{
@@ -113,7 +119,7 @@
 		  		  .catch(this.handleGetNameDataErr.bind(this))
 			},
 			handleGetNameDataSucc(res){
-				this.shopName = res.data.data.shopName
+				this.shopName = res.data.data.shopName 				//商铺名赋值
 			},
 			handleGetNameDataErr(res){
 				console.log(res)
@@ -139,6 +145,7 @@
 		  		this.goodsFormats1 = this.z_detail.goodsFormats1//筛选1
 		  		this.goodsFormats2 = this.z_detail.goodsFormats2//筛选2
 		  		this.landlordId = this.z_detail.landlordId		//房东id
+		  		this.kucunnum = res.data.data.goodsNum			//总数量
 		  		this.goodsFormats1data = this.z_detail.goodsFormats1.formatsInfoList//筛选1数据
 		  		if(this.z_detail.goodsFormats2==null){
 		  			this.goodsFormats2data=[]
@@ -152,19 +159,14 @@
 		  		console.log("失败了")
 		  	},
 		  	handleSelect1(infoFormatId1){ 						   //点击筛选1按钮
-		  		console.log(infoFormatId1.id)
-		  		console.log(infoFormatId1.state)
-		  		console.log(infoFormatId1.img)
 		  		if(infoFormatId1.img==null){
 
 		  		}else{
 		  			this.imgUrl = infoFormatId1.img 				//判断有图片图片赋值
 		  		}
-		  		console.log(this.id)
 		  		this.getSelect1(infoFormatId1.id,infoFormatId1.state)
 		  	},
 		  	handleSelect2(infoFormatId2){ 						    //点击筛选2按钮
-		  		console.log(infoFormatId2)
 		  		if(infoFormatId2.img==null){
 
 		  		}else{
@@ -178,28 +180,43 @@
 		  		  .catch(this.handleGetDataErr1.bind(this))
 		  	},
 		  	handleGetDataSucc1(res){
-		  		console.log(res)
-		  		this.goodsFormats2data  = res.data.data
+		  		this.goodsFormats2data  = res.data.data 			//筛选2数据赋值
 		  	},
 		  	handleGetDataErr1(res){
 		  		console.log(res)
 		  	},
-		  	getSelect2(a,b){
+		  	getSelect2(a,b){											//获取筛选2的数据
 		  		axios.get('/ds-app/goods/getFormatsById?goodsId='+this.id+'&infoFormatId2='+a+'&infoFormatStatus2='+b)
 		  		  .then(this.handleGetDataSucc2.bind(this))
 		  		  .catch(this.handleGetDataErr2.bind(this))
 		  	},
 		  	handleGetDataSucc2(res){
 		  		console.log(res)
-		  		this.goodsFormats1data  = res.data.data
+		  		this.goodsFormats1data  = res.data.data 				//筛选1数据进行赋值
 		  	},
 		  	handleGetDataErr2(res){
 		  		console.log(res)
 		  	},
+		  	handleGetKuCunClick(data){									//点击购物车获取库存
+		  		console.log(data)
+		  		this.handleGetKuCunData(data)
+		  	},
+		  	handleGetKuCunData(params){									//库存请求接口
+		  		axios.get('/ds-app/goods/getFormatsNumById?goodsId='+params.goodsId+'&infoFormatId1='+params.selectIndex+'&infoFormatId2='+params.selectIndex2)
+		  		  .then(this.handleGetKuCunDataSucc.bind(this))
+		  		  .catch(this.handleGetKuCunDataErr.bind(this))
+		  	},
+		  	handleGetKuCunDataSucc(res){
+		  		console.log(res)
+		  		this.kucunnum = res.data.data.num 						//库存数量赋值
+		  	},
+		  	handleGetKuCunDataErr(res){
+		  		console.log(res)
+		  	}
+
 		},
 		mounted(){
 			this.id=this.$route.params.id
-			console.log(this.id)
 			this.getIndexData()
 		}
 	}
