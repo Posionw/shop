@@ -1,20 +1,25 @@
 <template>
 	<div class="button">
-		<div class="btn"
-			 @click="handlePic"
-			 :class="{active:tab == 1}">
-			 图片
-		</div>
-		<div class="btn"
-			 @click="handleVideo"
-			 :class="{active:tab == 0}">
-			 视频
-		</div>
+		<template v-if="videoUrl!=null">
+			<div class="btn"
+				 @click="handlePic"
+				 :class="{active:tab == 1}">
+				 图片
+			</div>
+			<div class="btn"
+				 @click="handleVideo"
+				 :class="{active:tab == 0}">
+				 视频
+			</div>
+		</template>
 	</div>
 </template>
 <script>
 	export default{
 		name:'detail-button',
+		props:{
+			videoUrl:''
+		},
 		data(){
 			return{
 				tab:'1',
@@ -31,7 +36,10 @@
 				this.$emit('tabPic',this.tab)
 				// console.log(this.tab)
 			}
-		}
+		},
+		mounted(){
+			console.log(this.videoUrl)
+		},
 	}
 </script>
 <style lang="stylus" scoped>

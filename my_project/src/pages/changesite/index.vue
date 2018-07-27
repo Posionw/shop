@@ -163,6 +163,7 @@
 	}
 </script>
 <style lang="stylus" scoped>
+@import "../../assets/stylus/varibles.styl"
 .page
 	margin-top:0.4rem;
 	height:100%;
@@ -173,7 +174,7 @@
 		bottom: 0;
 		height: 0.5rem;
 		width: 100%;
-		background:#20bcff;
+		background:$bgColor;
 		color:#fff;
 		text-align: center;
 		line-height: 0.5rem;

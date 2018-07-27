@@ -17,11 +17,12 @@
 	}
 </script>
 <style lang="stylus" scoped>
+	@import "../../assets/stylus/varibles.styl"
 	.head
 		height:0.4rem;
 		line-height: 0.4rem;
 		width: 100%;
-		background: #20bcff;
+		background: $bgColor;
 		box-sizing: border-box;
 		padding: 0 0.1rem;
 		position:fixed;

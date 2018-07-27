@@ -78,6 +78,7 @@
 	}
 </script>
 <style lang="stylus" scoped>
+	@import "../../assets/stylus/varibles.styl"
 	.title
 		height:0.9rem;
 		// width: 100%;
@@ -121,7 +122,7 @@
 				text-decoration:line-through;
 			.zan_number
 				float:right;
-				color:#20BCFF;
+				color:$fontColor;
 				font-size: 0.13rem;
 				font-family: '.PingFang-SC-Regular';
 			.zan

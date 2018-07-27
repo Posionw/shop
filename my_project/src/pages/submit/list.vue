@@ -1,6 +1,8 @@
 <template>
 	<div style="overflow: hidden">
-		<div class="list" v-for="(item,index) in zlist">
+		<div class="list"
+			 v-for="(item,index) in zlist"
+			 :key="index">
 			<div class="list_li">
 				<div class="car_head">
 					<div class="car_head_l">
@@ -8,7 +10,9 @@
 					</div>
 					<div class="car_head_r">{{item.goods.shopName}}</div>
 				</div>
-				<div class="ll_c"  v-for="(ite,index) in item.goods.sp">
+				<div class="ll_c"
+					 v-for="(ite,index) in item.goods.sp"
+					 :key="index+'a'">
 					<router-link :to="'/Detail/'+ite.id">
 					<div class="con_l">
 						<img :src="ite.imgUrl" alt="">
@@ -24,7 +28,9 @@
 						<div class="price">¥{{ite.price}}</div>
 					</div>
 				</div>
-				<div class="huq" v-for="(ii,index) in item.goods.couponList">
+				<div class="huq"
+					 v-for="(ii,index) in item.goods.couponList"
+					 :key="index">
 					<div class="yh_name">{{ii.rules}}</div>
 					<!-- <div class="wxzf_r" v-if="select==true"  @click="handleSelectClick">
 						<img src="@/assets/images/zhufu-choose3@2x.png" alt="" />

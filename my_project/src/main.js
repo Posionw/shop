@@ -15,7 +15,9 @@ import '@/assets/js/flexible.js'
 import 'swiper/dist/css/swiper.css'
 import 'mint-ui/lib/style.css';
 import store from '@/store'
+import { Lazyload } from 'mint-ui';
 
+Vue.use(Lazyload);
 
 
 Vue.config.productionTip = false

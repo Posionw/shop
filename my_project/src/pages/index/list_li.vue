@@ -3,13 +3,14 @@
 		<mt-loadmore
 			:autoFill="autoFill"
 			:bottom-method="loadBottom"
+			:bottom-all-loaded="allLoaded"
 			ref="loadmore">
 		  	<ul class="list">
 		  		<template v-if="z_list.length > 0">
 			    	<li class="list_card" v-for="(item,index) in z_list" :key="index">
 			    		<router-link :to="'/Detail/'+item.goodsId">
 				    		<div class="card_t">
-				    			<img :src="item.imgUrls" alt="">
+				    			<img v-lazy="item.imgUrls" alt="">
 				    		</div>
 				    		<div class="card_b">
 				    			<div class="card_title">{{item.goodsName}}</div>
@@ -38,7 +39,7 @@
 		name:'list-li',
 		components:{
 			Loadmore,
-			Indicator
+			Indicator,
 		},
 		props:['num'],
 		data(){
@@ -48,7 +49,8 @@
 				autoLoaded:false,
 				page:1,
 				loading:true,
-				top:0
+				top:0,
+				allLoaded:false,
 			}
 		},
 		computed:{
@@ -67,7 +69,6 @@
 			  this.page+=1
 			  this.getIndexData(this.id)
 			  console.log('加载')
-			  this.allLoaded = true;// if all data are loaded
 			  this.$refs.loadmore.onBottomLoaded();
 			},
 			getIndexData(id){
@@ -76,10 +77,12 @@
 		  		  .catch(this.handleGetDataErr.bind(this))
 		  	},
 		  	handleGetDataSucc(res){
-		  		// console.log(res)
-		  		// console.log(res.data.data)
-		  		this.z_list= res.data.data.concat(this.z_list)
-		  		// console.log(this.z_list)
+		  		console.log(res)
+		  		// this.z_list= res.data.data.concat(this.z_list)
+		  		if(res.data.hasMore==0){
+		  			this.allLoaded = true; //if all data are loaded
+		  		}
+		  		this.z_list=this.z_list.concat(res.data.data)
 		  	},
 		  	handleGetDataErr(){
 		  		console.log("失败了")
@@ -145,6 +148,7 @@
 				height:3.4rem;
 				width: 3.38rem;
 				border-radius:0.05rem 0.05rem 0 0;
+				background:url(../../assets/images/dtmr.png);
 				img
 					height:3.4rem;
 					width: 3.38rem;

@@ -51,12 +51,14 @@
 			// this.changeCid(this.$route.query.cid)
 		},
 		watch:{
-			// $route(){
-			// 	console.log(this.$route)
-			// 	if(this.$route.cid){
-			// 		this.getShopName(this.$route.query.id)
-			// 	}
-			// }
+			// '$route' (to) {
+   //               if (to.name === 'Index') {
+   //                      console.log(this.$route.query.cid)
+   //                      this.getShopName(this.$route.query.cid)
+   //                      this.changCi(this.$route.query.cid)
+   //                      this.changUser(this.$route.query.id)
+   //                }
+   //         }
 		}
 	}
 </script>

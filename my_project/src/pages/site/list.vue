@@ -85,13 +85,14 @@
 	}
 </script>
 <style lang="stylus" scoped>
+@import "../../assets/stylus/varibles.styl"
 .mint-cell
 	margin-bottom:0.1rem;
 	.list_li
 		padding: 0.18rem;
 		width: 3.39rem;
 		background:#fff;
-		color:#3792EB;
+		color:$fontColor;
 		// margin-bottom: 0.1rem;
 		.list_li_name
 			height:0.14rem;

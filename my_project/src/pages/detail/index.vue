@@ -2,6 +2,7 @@
 <div style="height: 100%;background:#fff;">
 	<div class="fan iconfont" @click="handleReturnClick">&#xe720;</div>
 	<div class="detail">
+		<detail-header :class="{'active':isShow}"></detail-header>
 		<component
 			:is="type"
 			list="123"
@@ -11,6 +12,7 @@
 		</component>
 		<detail-button
 			class="btn"
+			:videoUrl="videoUrl"
 			@tabVideo="tab"
 			@tabPic="tab">
 		</detail-button>
@@ -53,6 +55,7 @@
 <script>
 	import axios from 'axios'
 	import { mapState } from 'vuex'
+	import DetailHeader from './header.vue'
 	import DetailSwiper from './swiper.vue'
 	import DetailVideo from './video.vue'
 	import DetailButton from './button.vue'
@@ -64,6 +67,7 @@
 	export default{
 		name:'detail',
 		components:{
+			DetailHeader,
 			DetailSwiper,
 			DetailVideo,
 			DetailButton,
@@ -96,11 +100,24 @@
 				landlordId:'',		//房东id
 				shopName:'',		//店铺名
 				kucunnum:'',		//库存
-				videoUrl:'http://xxnnapp.test.upcdn.net/uploads/20180627/quardnerv2jat3ekqeias40pt6zu3kyx.tmp',			//视频
+				videoUrl:'',			//视频
+				isShow:true
 			}
 		},
 		computed:{
 			 ...mapState(['userId']),
+			 scroll:function(){
+			 	var _this =this
+				window.addEventListener('scroll',function(){
+				    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+				    if(scrollTop>0){
+				        _this.isShow=false
+				    }else{
+				    	_this.isShow=true
+				    }
+			 })
+
+			}
 		},
 		methods:{
 			tab:function (tab) { 	//判断加载视频组件还是轮播图组件
@@ -154,6 +171,7 @@
 		  		}
 		  		this.imgUrl = this.z_detail.imgUrls
 		  		this.getShopName(this.z_detail.landlordId)
+		  		this.videoUrl = this.z_detail.goodsViewUrl
 		  	},
 		  	handleGetDataErr(){
 		  		console.log("失败了")
@@ -218,7 +236,13 @@
 		mounted(){
 			this.id=this.$route.params.id
 			this.getIndexData()
+		},
+		watch:{
+			scroll(){
+				console.log(this.scroll)
+			}
 		}
+
 	}
 </script>
 <style lang="stylus" scoped>

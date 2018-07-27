@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="overflow:hidden">
 		<z-header>我的地址</z-header>
 		<site-list
 			class="site_k"

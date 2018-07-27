@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="overflow:hidden">
 		<z-header>我的卡券</z-header>
 		<card-card :list="list"></card-card>
 	</div>

@@ -51,6 +51,7 @@
 	}
 </script>
 <style lang="stylus" scoped>
+	@import "../../assets/stylus/varibles.styl"
 	.footer
 		height:0.6rem;
 		width: 100%;
@@ -73,7 +74,7 @@
 			width: 1.3rem;
 			color: #fff;
 			font-size: 0.18rem;
-			background: #20BCFF;
+			background: $bgColor;
 			float: left;
 			text-align: center;
 </style>

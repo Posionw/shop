@@ -7,7 +7,9 @@
 			ref="loadmore">
 			<ul class="list">
 				<template v-if="list.length>0">
-					<li class="list_li" v-for="(item,index) in list">
+					<li class="list_li"
+						v-for="(item,index) in list"
+						:key="index">
 						<div class="list_li_t">
 							<img src="@/assets/images/time.png" alt="">
 							<div class="time">{{item.createTime}}</div>
@@ -15,10 +17,12 @@
 							<div v-else-if="item.orderStatus==2" class="pay">已取消</div>
 							<div v-else="item.orderStatus==3" class="pay">已完成</div>
 						</div>
-						<div class="list_li_c" v-for="(ite,i) in item.orderGoodsList">
+						<div class="list_li_c"
+							 v-for="(ite,i) in item.orderGoodsList"
+							 :key="i">
 							<router-link :to="'/Detail/'+ite.goodsId">
 								<div class="list_li_c_l">
-									<img :src="ite.imgUrls" alt="">
+									<img v-lazy="ite.imgUrls" alt="">
 								</div>
 							</router-link>
 							<div class="list_li_c_r">
@@ -161,6 +165,7 @@
 						width: 1rem;
 						float: left;
 						margin-top:0.125rem;
+						background:url(../../assets/images/xtmr.png);
 						img
 							height: 1rem;
 							width: 1rem;

@@ -72,6 +72,7 @@
 	}
 </script>
 <style lang="stylus" scoped>
+	@import "../../assets/stylus/varibles.styl"
 	.homeNav {
 	    width: 100%;
 	    overflow: hidden;
@@ -105,8 +106,8 @@
 	    }
 	    .active{
 	    	height:0.44rem;
-	    	border-bottom:0.02rem solid #3792eb;
-	    	color:#3792eb;
+	    	border-bottom:0.02rem solid $fontColor;
+	    	color:$fontColor;
 	    }
 }
 ::-webkit-scrollbar {

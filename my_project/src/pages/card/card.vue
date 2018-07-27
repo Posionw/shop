@@ -1,7 +1,7 @@
 <template>
 	<ul>
 		<template v-if="list.length!=0">
-		<li class="card_k" v-for="(item,index) in list">
+		<li class="card_k" v-for="(item,index) in list" :key="index">
 			<div class="card_l">
 				<div class="card_l_t">¥{{item.couponMoney}}</div>
 				<div class="card_l_b">{{item.rules}}}</div>

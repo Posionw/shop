@@ -1,8 +1,9 @@
 <template>
-	<div>
+	<div style="overflow: hidden">
 		<div class="collect">
 			<div class="collect_card"
-			     v-for="(item,index) in list">
+			     v-for="(item,index) in list"
+			     :key="index">
 				 <router-link :to="'/Detail/'+item.goodsId">
 					 <div class="collect_card_t">
 						<img :src="item.imgUrls" alt="">

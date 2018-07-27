@@ -28,10 +28,11 @@
 	}
 </script>
 <style lang="stylus" scoped>
+	@import "../../assets/stylus/varibles.styl"
 	.head
 		height:0.46rem;
 		width: 100%;
-		background:#20bcff;
+		background:$bgColor;
 		position: fixed;
 		top: 0;
 		z-index: 9999;

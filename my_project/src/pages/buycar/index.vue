@@ -6,7 +6,7 @@
 			</div>
 		您的购物车空空如也...</div>
 		<div v-else>
-			<div v-for="(item,index) in added">
+			<div v-for="(item,index) in added" :key="index">
 			<div class="car_head">
 				<div class="car_head_l">
 					<img src="@/assets/images/sp.png" alt="">
@@ -39,7 +39,7 @@
 			  			</div>
 			  		</template>
 			  		<!-- <input class="kuang_l" type="checkbox" id="one" :value="index" name="a" v-model="picked"> -->
-			  		<router-link :to="'/Detail/'+item.id">
+			  		<router-link :to="'/Detail/'+ite.id">
 				  		<div class="kuang_c">
 				  			<img :src="ite.imgUrl" alt="">
 				  		</div>
@@ -143,6 +143,7 @@
 	}
 </script>
 <style lang="stylus" scoped>
+@import "../../assets/stylus/varibles.styl"
 .car_head
 	height:0.3rem;
 	background:#f7f7f7;
@@ -310,12 +311,12 @@
 		float: left;
 		// background:pink;
 		font-size: 0.14rem;
-		color: #21283E;
+		color: $bgColor;
 		margin-left:0.32rem;
 	.jiesuan
 		height:0.6rem;
 		width: 1.3rem;
-		background:#20BCFF;
+		background:$bgColor;
 		float: right;
 		line-height: 0.6rem;
 		text-align: center;

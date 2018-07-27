@@ -17,6 +17,7 @@
 	}
 </script>
 <style lang="stylus" scoped>
+	@import "../../assets/stylus/varibles.styl"
 	.xqxx
 		height:0.25rem;
 		width: 100%;
@@ -24,7 +25,7 @@
 		.xqxx_l
 			height:0.2rem;
 			width: 0.04rem;
-			background: #20BCFF;
+			background: $fontColor;
 			border-radius: 100px;
 			float: left;
 			margin-top: 0.025rem;

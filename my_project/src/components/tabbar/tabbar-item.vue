@@ -39,6 +39,7 @@
 	// @click="$parent.$parent.$emit('input',id)"
 </script>
 <style lang="stylus" scoped>
+	@import "../../assets/stylus/varibles.styl"
 	.m-tabbar-item{
 	    flex: 1;
 	    text-align: center;
@@ -58,7 +59,7 @@
 	    }
 	    &.is-active{
 	        .m-tabbar-item-text{
-	            color: #3792EB;
+	            color: $fontColor;
 	        }
 	    }
 	}

@@ -22,7 +22,8 @@
 		  				<ul class="select_li">
 		  					<li :class="[{active:item.infoFormatId==selectIndex},{act:item.status!==1}]"
 		  					    @click="handleSelect(index,item.infoFormatId,item.status,item.img)"
-								v-for="(item,index) in goodsFormats1data">
+								v-for="(item,index) in goodsFormats1data"
+								:key="index">
 		  						{{item.infoName}}
 		  						<input type="radio"
 		  							   v-model="picked"
@@ -41,7 +42,8 @@
 		  				<ul class="select_li">
 		  					<li :class="[{active:item.infoFormatId==selectIndex2},{act:item.status!==1}]"
 		  					    @click="handleSelect2(index,item.infoFormatId,item.status,item.img)"
-		  					    v-for="(item,index) in goodsFormats2data">
+		  					    v-for="(item,index) in goodsFormats2data"
+		  					    :key="index">
 		  						{{item.infoName}}
 		  						<input type="radio"
 		  							   v-model="size"
@@ -301,6 +303,7 @@
 	}
 </script>
 <style lang="stylus" scoped>
+	@import "../../assets/stylus/varibles.styl"
 	.footer
 	   height:0.6rem;
 	   width: 100%;
@@ -482,7 +485,7 @@
 			.kuang_b
 			   height:0.6rem;
 			   width: 100%;
-			   background: #20BCFF;
+			   background: $bgColor;
 			   // box-shadow: 0px -4px 12px 0px #EDF3F4;
 			   position: fixed;
 			   bottom:0;

@@ -7,7 +7,9 @@
 		  		<div class="kuang_w">
 					<div class="title">店铺优惠券</div>
 					<div class="list">
-			  			<div class="list_li" v-for="(item,index) in discounts">
+			  			<div class="list_li"
+			  				 v-for="(item,index) in discounts"
+			  				 :key="index">
 			  				<div class="list_li_l">
 			  					<div class="price">¥{{item.couponMoney}}</div>
 			  					<div class="xianzhi">订单金额满{{item.consumptionLimit}}可使用</div>
