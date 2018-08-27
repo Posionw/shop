@@ -15,6 +15,10 @@ export default {
     changCi(context,id){
         context.commit("changeCid",id)
     },
+    // 判断安卓还是ios
+    changOi(context,id){
+        context.commit("changeOid",id)
+    },
     //提交订单
     zSubmit(context){
         context.commit("cleanTrue")

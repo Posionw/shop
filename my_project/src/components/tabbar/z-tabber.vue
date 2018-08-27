@@ -4,7 +4,7 @@
 		<router-view />
 		<!-- </keep-alive>:to="'/Index?id='+userId+'&cid='+cid" -->
 		<tabbar>
-			<router-link :to="{path:'/Index',query:{id:userId,cid:cid}}">
+			<router-link :to="{path:'/Index',query:{id:userId,cid:cid,oid:oid}}">
 			<tabbar-item id='tab1'>
 				<img src="../../assets/images/zhuye2@2x.png" slot="icon-normal">
 				<img src="../../assets/images/zhuye1@2x.png" slot="icon-active">
@@ -39,7 +39,7 @@
 			tabbarItem
 		},
 		computed:{
-			...mapState(['userId','cid']),
+			...mapState(['userId','cid','oid']),
 		},
 		mounted(){
 			console.log(this.userId)

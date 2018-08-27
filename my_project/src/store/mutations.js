@@ -9,6 +9,12 @@ export default {
       state.cid = id
       localStorage.cid = id
     },
+    // 记录安卓还是ios
+    changeOid(state,id){
+      console.log(id)
+      state.oid = id
+      localStorage.oid = id
+    },
     // 记录点击下标
 	  changeTab(state,tab){
   		state.tab= tab
@@ -27,10 +33,14 @@ export default {
     changeOrderTab(state,index){
       state.orderIndex=index
     },
+    // 检测高度
+    changeRecruitScrollY(state,recruitScrollY) {
+      console.log(recruitScrollY)
+      state.recruitScrollY = recruitScrollY
+      // localStorage.setItem("recruitScrollY", recruitScrollY);
+    },
     // 添加购物车
     add(state,goods){
-
-      // 新写法》》》》》》》》》》》》》》》
       let shopId = state.added.find(n=>n.goods.landlordId == goods.landlordId)
       console.log(shopId)
       if(!shopId){
@@ -48,20 +58,15 @@ export default {
           record.num+=goods.sp[0].num
         }
       }
-
       var data = JSON.stringify(state.added)
       localStorage.setItem("car", data);
-      //新写法结束》》》》》》》》》》》》》》》
     },
     // 删除当前项
     del(state,product){
-      console.log('删除*******************')
       state.added.forEach((n,i)=>{
         if(n.goods.landlordId == product.a){
           n.goods.sp.forEach((m,j) => {
             if(m.id == product.b.id&&m.size==product.b.size&&m.picked==product.b.picked){
-              console.log('*********')
-              // m.num+=1
               n.goods.sp.splice(j,1)
               console.log(n.goods.sp)
               if(n.goods.sp.length==0){
@@ -79,10 +84,8 @@ export default {
       console.log(product)
       state.added.forEach((n,i)=>{
         if(n.goods.landlordId == product.a){
-          console.log('111122323323')
           n.goods.sp.forEach((m,j) => {
             if(m.id == product.b.id&&m.size==product.b.size&&m.picked==product.b.picked){
-              console.log('*********')
               m.num+=1
             }
           })
@@ -95,10 +98,8 @@ export default {
     carJian(state,product){
        state.added.forEach((n,i)=>{
         if(n.goods.landlordId == product.a){
-          console.log('111122323323')
           n.goods.sp.forEach((m,j) => {
             if(m.id == product.b.id&&m.size==product.b.size&&m.picked==product.b.picked){
-              console.log('*********')
               m.num-=1
               if(m.num<=1){
                 m.num=1
@@ -114,10 +115,8 @@ export default {
     selectList(state,product) {
       state.added.forEach((n,i)=>{
         if(n.goods.landlordId == product.a){
-          console.log(n.goods.sp)
           n.goods.sp.forEach((m,j) => {
             if(m.id == product.b.id&&m.size==product.b.size&&m.picked==product.b.picked){
-              console.log('*********')
               m.selected=!m.selected
             }
           })
@@ -142,30 +141,6 @@ export default {
     },
     // 清购物车
     cleanTrue(state,a){
-      // if(a==1){
-      //    console.log(state.added)
-      //   console.log('对')
-      // var arr = state.added
-      // arr.forEach((n,i)=>{
-      //   console.log(n)
-      //   n.goods.sp.forEach((m,j) => {
-      //     console.log(m)
-      //     if(m.selected == true){
-      //       console.log('当前j'+j)
-      //        n.goods.sp.splice(j,1)
-      //     }
-      //    //  if(n.goods.sp.length==0){
-      //    //    arr.splice(i,1)
-      //    // }
-      //   })
-      // })
-      // }
-
-      // // var data = JSON.stringify(state.added)
-      // // localStorage.setItem("car", data);
-      // console.log(state.added)
-
-
 
     var arr = []
     state.added.forEach((n,i) => {
@@ -210,18 +185,36 @@ export default {
         }
       })
     })
-
     state.added = arr
-
     var data = JSON.stringify(state.added)
     localStorage.setItem("car", data);
-
-
     }
 }
 
 
+      // 清空购物车
+      // if(a==1){
+      //    console.log(state.added)
+      //   console.log('对')
+      // var arr = state.added
+      // arr.forEach((n,i)=>{
+      //   console.log(n)
+      //   n.goods.sp.forEach((m,j) => {
+      //     console.log(m)
+      //     if(m.selected == true){
+      //       console.log('当前j'+j)
+      //        n.goods.sp.splice(j,1)
+      //     }
+      //    //  if(n.goods.sp.length==0){
+      //    //    arr.splice(i,1)
+      //    // }
+      //   })
+      // })
+      // }
 
+      // // var data = JSON.stringify(state.added)
+      // // localStorage.setItem("car", data);
+      // console.log(state.added)
 
 
 

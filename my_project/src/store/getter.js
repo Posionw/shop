@@ -85,7 +85,9 @@ export default{
 		})
 
 		return arr
-	}
+	},
+	// 计算高度
+	recruitScrollY:state => state.recruitScrollY
 }
 
 

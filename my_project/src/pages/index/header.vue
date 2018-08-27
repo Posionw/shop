@@ -67,7 +67,7 @@
 	     	tab(val,oldVal){
 	    		this.selectSort(this.id,this.tab)
 	    		this.tabIndex=this.tab
-	    	}
+	    	},
 	     },
 	}
 </script>

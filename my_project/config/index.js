@@ -12,14 +12,14 @@ module.exports = {
     proxyTable: {
 
         '/': {
-            target: 'https://ys.leiyu0001.cn/xxnn',
+            target: 'https://ys.leiyu0001.cn',
             changeOrigin: true,
             // target: 'http://localhost:8080',
             // pathRewrite: {
             //   '/api': '/static'
             // }
             pathRewrite: {
-              '/ds-app': '/ds-app'
+              '/ds-app': '/xxnn/ds-app'
             }
           }
     },
@@ -55,7 +55,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

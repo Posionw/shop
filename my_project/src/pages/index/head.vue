@@ -1,9 +1,9 @@
 <template>
 	<div class="head">
-		<div class="head_l iconfont">&#xe720;</div>
+		<div class="head_l iconfont" style="cursor:pointer" @click="handleGetBack">&#xe720;</div>
 		<!-- <div class="head_l">店铺一</div> -->
 		<div class="head_c">{{shopName}}</div>
-		<router-link :to="{path:'/Index',query:{id:userId,cid:''}}">
+		<router-link :to="{path:'/Index',query:{id:userId,cid:'',oid:oid}}">
 			<div class="head_r" @click="handleGetAllData">
 				<img src="@/assets/images/ssp.png" alt="">
 			</div>
@@ -11,19 +11,31 @@
 	</div>
 </template>
 <script>
-	import { mapState } from 'vuex';
+	import { mapState,mapActions } from 'vuex';
 	export default{
 		name:'index-head',
 		props:{
 			shopName:''
 		},
 		methods:{
+			...mapActions(['changUser','changCi']),
 			handleGetAllData(){
-				 window.location.reload();
+				this.$router.push('/Index?id='+this.userId+'&oid='+this.oid+'&cid=')
+				location.reload();
+			},
+			handleGetBack(){
+				console.log(this.oid)
+				if(this.oid==0){
+					window.android.getBack("js调用了android中的hello方法");
+				}else{
+					getBback()
+				}
+				// getBback()
+				// window.android.getBack("js调用了android中的hello方法");
 			}
 		},
 		computed:{
-			...mapState(['userId','cid']),
+			...mapState(['userId','cid','oid']),
 		},
 	}
 </script>

@@ -31,7 +31,9 @@
 		<detail-discounts
 			:discounts="discounts">
 		</detail-discounts>
-		<detail-details></detail-details>
+		<detail-details
+			:goodsContent="goodsContent">
+		</detail-details>
 		<detail-buycar
 			:price="price"
 			:title="title"
@@ -101,7 +103,8 @@
 				shopName:'',		//店铺名
 				kucunnum:'',		//库存
 				videoUrl:'',			//视频
-				isShow:true
+				isShow:true,
+				goodsContent:''		//商品详情
 			}
 		},
 		computed:{
@@ -171,7 +174,9 @@
 		  		}
 		  		this.imgUrl = this.z_detail.imgUrls
 		  		this.getShopName(this.z_detail.landlordId)
-		  		this.videoUrl = this.z_detail.goodsViewUrl
+		  		this.videoUrl = this.z_detail.goodsViewUrl		//视频图
+		  		this.goodsContent = this.z_detail.goodsContent
+
 		  	},
 		  	handleGetDataErr(){
 		  		console.log("失败了")

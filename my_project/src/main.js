@@ -7,8 +7,8 @@ import FastClick from 'fastclick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import Mint from 'mint-ui';
 import VideoPlayer from 'vue-video-player'
-require('video.js/dist/video-js.css')
-require('vue-video-player/src/custom-theme.css')
+import 'video.js/dist/video-js.css'
+import 'vue-video-player/src/custom-theme.css'
 import '@/assets/css/rest.css'
 import '@/assets/icon/iconfont.css'
 import '@/assets/js/flexible.js'

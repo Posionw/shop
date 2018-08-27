@@ -1,5 +1,5 @@
 <template>
-	<div class="bg" style="height:5.7rem;overflow: scroll;">
+	<div class="bg" style="height:5.7rem;overflow: scroll;-webkit-overflow-scrolling: touch;">
 		<mt-loadmore
 			:autoFill="autoFill"
 			:bottom-all-loaded="allLoaded"
@@ -29,8 +29,8 @@
 								<div class="list_li_name">{{ite.goodsName}}</div>
 								<div class="list_li_size">
 									<span>{{ite.goodsOption1}}</span>
-									<span>/{{ite.goodsOption2}}</span>
-									<span>/{{ite.goodsNumber}}件</span>
+									<span> {{ite.goodsOption2}}</span>
+									<span> {{ite.goodsNumber}}件</span>
 								</div>
 								<div class="list_li_price">¥{{ite.goodsPrice}}</div>
 							</div>
@@ -38,7 +38,11 @@
 						<div class="list_li_b">
 							<div class="list_li_num">共{{item.orderGoodsList.length}}件商品</div>
 							<div class="list_li_totle">实付：¥{{item.orderMoney}}</div>
-							<div class="list_li_pay">去付款</div>
+							<router-link :to="'/Myorderxq/'+item.orderId">
+								<div class="list_li_pay" v-if="item.orderStatus==1">去付款</div>
+								<div v-else-if="item.orderStatus==2" class="list_li_pay">已取消</div>
+								<div v-else="item.orderStatus==3" class="list_li_pay">已完成</div>
+							</router-link>
 						</div>
 					</li>
 				</template>
@@ -92,6 +96,9 @@
 			  this.$emit('page',this.page)
 			  this.$refs.loadmore.onBottomLoaded();
 			},
+			handleClick(){
+				alert('1')
+			}
 		},
 		watch:{
 			orderIndex(){
@@ -180,13 +187,13 @@
 							height: 0.3rem;
 							font-size:0.14rem;
 							line-height: 0.15rem;
-							display: -webkit-box; 
-						    overflow: hidden;
-						    white-space: normal !important;
-						    text-overflow: ellipsis;
-						    word-wrap: break-word;
-						    -webkit-line-clamp: 2; 
-						    -webkit-box-orient: vertical;
+							overflow: hidden;
+							white-space: normal !important;
+							word-wrap: break-word;
+							text-overflow: ellipsis;
+							-webkit-line-clamp: 2;
+							-webkit-box-orient: vertical;
+							display: -webkit-box;
 						.list_li_size
 							height:0.12rem;
 							line-height: 0.12rem;

@@ -197,6 +197,7 @@
 			height: 0.62rem;
 			font-size: 0.15rem;
 			color: #999;
+			float:left;
 		.site
 			p
 				height:0.66rem;

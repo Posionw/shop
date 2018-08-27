@@ -2,7 +2,8 @@
 	<div class="page">
 		<z-header>我的订单</z-header>
 		<submit-site :address="address"></submit-site>
-		<submit-pay></submit-pay>
+		<submit-pay
+			@payState="handlePayState"></submit-pay>
 		<!-- <div @click="handle">adsfasfd</div> -->
 		<submit-list
 					 :totalPrice="totalPrice"
@@ -38,11 +39,12 @@
 		data(){
 			return {
 				address:'',														//地址信息
-				list:''															//商品列表
+				list:'',														//商品列表
+				payState:true													//支付方式 false支付宝
 			}
 		},
 		computed:{
-			 ...mapState(['userId','cid']),
+			 ...mapState(['userId','cid','oid']),
 			 ...mapGetters(['order','totalNum','totalPrice']),
 			 goods(){
 		    	return {
@@ -94,6 +96,10 @@
 		  	handleGetYhListDataErr(res){
 		  		// console.log(res)
 		  	},
+		  	handlePayState(state){
+		  		console.log(state)
+		  		this.payState = state
+		  	},
 		  	getOrderData(total,good){											//获取支付id接口
 		  		axios.post('/ds-app/order/createPayOrder',qs.stringify({
 	    				param:good,												//商品信息
@@ -105,22 +111,27 @@
 		  		  .catch(this.handleGetOrderDataErr.bind(this))
 		  	},
 		  	handleGetOrderDataSucc(res){
-		  		// console.log(res)
-		  		this.cleanTrue(1)
+		  		console.log(this.oid)
+		  		console.log(this.payState)
+		  		console.log(res)
+		  		this.cleanTrue(1)											   //清空购物车为true的
+		  		var that =this
+		  		if(this.oid==0){
+		  			 window.android.orderPay(that.payState,res.data.data);     //给安卓传参数
+		  		}else{
+		  			orderPay(that.payState,res.data.data)  					   //给ios传参数
+		  		}
 		  	},
 		  	handleGetOrderDataErr(res){
 		  		// console.log(res)
 		  	},
-		  	handleGetYhhData(id){												//点击优惠券请求数据
+		  	handleGetYhhData(id){											   //点击优惠券请求数据
 		  		this.getYhListData(id)
 		  	},
-		  	handleGetPayData(total){											//点击支付调用支付订单接口
-		  		var good = JSON.stringify(this.list)							//total为支付总价
+		  	handleGetPayData(total){										   //点击支付调用支付订单接口
+		  		var good = JSON.stringify(this.list)						   //total为支付总价
 		  		this.getOrderData(total,good)
 		  	},
-		  	// handle(){
-		  	// 	this.cleanTrue(1)
-		  	// }
 
 		},
 		watch:{

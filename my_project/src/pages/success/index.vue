@@ -2,16 +2,34 @@
 	<div>
 		<div class="success">
 			<p class="jieshou">您的订单已被接收，敬请期待</p>
-			<div class="btn">再来一单</div>
+				<div class="btn" @click="handleGetAllData">再来一单</div>
 		</div>
 		<router-link to="Myorder">
-			<div class="order">查看订单</div>
+			<router-link :to="'/Myorder/'">
+				<div class="order">查看订单</div>
+			</router-link>
 		</router-link>
 	</div>
 </template>
 <script>
 	export default {
-		name:'success'
+		name:'success',
+		methods:{
+			...mapActions(['changUser','changCi','changOi']),
+		},
+		computed:{
+			 ...mapState(['userId','cid','oid']),
+		},
+		methods:{
+			handleGetAllData(){
+				this.$router.push('/Index?id='+this.userId+'&oid='+this.oid+'&cid='+this.cid)
+			},
+		},
+		mounted(){
+			this.changUser(this.$route.query.id)
+			this.changCi(this.$route.query.cid)
+			this.changOi(this.$route.query.oid)
+		}
 	}
 </script>
 <style lang="stylus" scoped>

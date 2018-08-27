@@ -32,6 +32,7 @@
         methods:{
         	...mapMutations(['changeTabbar']),
         	handelclick(a){
+        		console.log(a+"*************")
         		this.changeTabbar(a)
         	}
         }

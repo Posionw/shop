@@ -1,25 +1,25 @@
 <template>
 	<div>
-		<router-link to="/Site">
-			<div class="site">
-				<div class="site_t">
-					<span class="site_t_l">{{address.consignee}}</span>
-					<span class="site_t_r">{{address.phone}}</span>
-				</div>
-				<div class="site_b">
-					{{address.area}} {{address.address}}
-				</div>
+		<div class="site">
+			<div class="site_t">
+				<span class="site_t_l">{{name}}</span>
+				<span class="site_t_r">{{phone}}</span>
 			</div>
-		</router-link>
+			<div class="site_b">
+				{{area}} {{address}}
+			</div>
+		</div>
 	</div>
 </template>
 <script>
 	export default {
-		name:'submit-site',
+		name:'myorderxq-header',
 		props:{
-			address:''
+			name:'',
+			phone:'',
+			area:'',
+			address:'',
 		}
-
 	}
 </script>
 <style lang="stylus" scoped>
@@ -35,7 +35,6 @@
 			height:0.25rem;
 			line-height: 0.25rem;
 			width: 3.38rem;
-			// background: red;
 			margin: 0 auto;
 			margin-top: 0.192rem;
 			color: #999;
@@ -53,13 +52,4 @@
 			padding-bottom: 0.2rem;
 			float: left;
 			margin-left: 0.2rem;
-
-
 </style>
-
-
-
-
-
-
-

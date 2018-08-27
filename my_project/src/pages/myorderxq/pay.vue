@@ -8,10 +8,14 @@
 				<img src="@/assets/images/wexinzhifu@2x.png" alt="" />
 			</div>
 			<div class="wxzf_c">微信支付</div>
-			<div class="wxzf_r" v-if="select==true"  @click="handleSelectClick">
+			<div class="wxzf_r"
+				 v-if="select==true"
+				 @click="handleSelectClick">
 				<img src="@/assets/images/zhufu-choose3@2x.png" alt="" />
 			</div>
-			<div class="wxzf_r2" v-else  @click="handleSelectClick">
+			<div class="wxzf_r2"
+				 v-else
+				 @click="handleSelectClick">
 				<img src="@/assets/images/zhufu-choose@2x.png" alt="" />
 			</div>
 		</div>
@@ -20,10 +24,14 @@
 				<img src="@/assets/images/hdfk@2x.png" alt="" />
 			</div>
 			<div class="wxzf_c">支付宝支付</div>
-			<div class="wxzf_r" v-if="select==false"  @click="handleSelectClick">
+			<div class="wxzf_r"
+				 v-if="select==false"
+				 @click="handleSelectClick">
 				<img src="@/assets/images/zhufu-choose3@2x.png" alt="" />
 			</div>
-			<div class="wxzf_r2" v-else  @click="handleSelectClick">
+			<div class="wxzf_r2"
+				 v-else
+				 @click="handleSelectClick">
 				<img src="@/assets/images/zhufu-choose@2x.png" alt="" />
 			</div>
 		</div>

@@ -51,6 +51,13 @@ export default new Router({
 				keepAlive:false
 			},
 		component: () => import('@/pages/myorder/index')
+	},,{
+		path: '/Myorderxq/:id',
+		name: 'Myorderxq',
+		meta:{
+				keepAlive:false
+			},
+		component: () => import('@/pages/myorderxq/index')
 	},{
 		path: '/Site',
 		name: 'Site',
@@ -83,7 +90,7 @@ export default new Router({
 		component: () => import('@/pages/success/index')
 	}],
 	scrollBehavior (to, from, savedPosition) {
-	   
+
 	}
 
 })

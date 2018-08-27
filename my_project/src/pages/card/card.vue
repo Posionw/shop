@@ -44,7 +44,7 @@ ul
 	.card_k
 		height:1.16rem;
 		width: 3.40rem;
-		background: url('../../assets/images/youhuiquan@2x.png') no-repeat;
+		background: url('../../../static/youhuiquan@2x.png') no-repeat;
 		background-size: 3.40rem 1.16rem;
 		margin: 0 auto;
 		margin-top: 0.13rem;

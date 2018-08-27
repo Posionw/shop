@@ -7,13 +7,16 @@
 			</div>
 		</div>
 		<div class="xqcon">
-			是否能看见电脑饭卡啊多少烦恼科技安防科技阿森纳饭卡上你烦恼的撒可能饭卡苏丹诺夫卡萨诺反馈啊豆腐脑卡萨诺饭卡上你答复是可能的萨卡and 疯狂思念对方看见少年罚款
+			{{goodsContent}}
 		</div>
 	</div>
 </template>
 <script>
 	export default {
-		name:'detail-details'
+		name:'detail-details',
+		props:{
+			goodsContent:''
+		}
 	}
 </script>
 <style lang="stylus" scoped>

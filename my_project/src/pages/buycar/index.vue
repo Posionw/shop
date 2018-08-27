@@ -1,5 +1,5 @@
 <template>
-	<div id="gwc" style="padding-bottom: 1.1rem;">
+	<div id="gwc" style="padding-bottom: 1.5rem;overflow: hidden">
 		<div class="kong" v-if="!added.length">
 			<div class="pic">
 				<img src="@/assets/images/gouwuche1@2x.png" alt="">
@@ -102,7 +102,7 @@
 		    ...mapGetters(['totalPrice','totalNum','seleall','order'])
 		},
 		methods:{
-			...mapMutations(['del', 'carAdd','carJian','selectList']),
+			...mapMutations(['del', 'carAdd','carJian','selectList','changeTabbar']),
 			...mapActions(['selected','selectedAll']),
 			handlerJianClick(a,b){
 				this.carJian({a,b})
@@ -131,6 +131,7 @@
 			// console.log(this.added)
 			// console.log(this.dingDan)
 			// console.log(this.carList)
+			this.changeTabbar('tab2')
 		},
 		watch:{
 			picked(){
@@ -199,12 +200,18 @@
 			float: left;
 			margin-left: 0.12rem;
 			.title
-				height:0.3rem;
+				height:0.25rem;
 				width: 1.97rem;
 				// background:blue;
 				font-family: PingFangSC-Regular;
 				font-size: 0.13rem;
 				color: #454553;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-wrap: break-word;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				display: -webkit-box; /*将对象作为弹性伸缩盒子模型显示*/
 			.size
 				height:0.2rem;
 				width: 1.97rem;

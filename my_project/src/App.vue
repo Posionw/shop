@@ -20,9 +20,9 @@ export default {
 	#app{
 		height: 100%;
 	}
-  .tan1{
-    z-index: 999999;
-    width: 1.2rem;
-  }
+  /*.tan1{
+      z-index: 999999;
+      width: 1.2rem;
+    }*/
 
 </style>

@@ -1,21 +1,25 @@
 <template>
 	<div>
-		<div class="model" :class="{'active':show}">
-			<router-link :to="'/Myorder/'">
-				<div class="model_guan">
-					<img src="@/assets/images/guan.png" alt="">
+		<div class="model"
+			 :class="{'active':show}">
+				<div class="model_guan"
+					 @click="handelGuanClick">
+					 <img src="@/assets/images/guan.png" alt="">
 				</div>
-			</router-link>
 			<div class="model_t">
 				<img src="@/assets/images/jz.png" alt="">
 			</div>
 			<div class="model_b">正在加载请稍后...</div>
 		</div>
 		<div class="footer">
-			<div class="footer_left">合计:¥{{zzlist.total}}</div>
-			<!-- <router-link to="Success"> -->
-				<div class="footer_right" @click="handleClick">提交订单({{zzlist.num}})</div>
-			<!-- </router-link> -->
+			<div class="footer_left">合计:¥{{price}}</div>
+				<div class="footer_right"
+					 v-if="orderStatus==1"
+					 @click="handleClick">支付</div>
+				<div class="footer_right2"
+					 v-else-if="orderStatus==2">已取消</div>
+				<div class="footer_right2"
+					 v-else-if="orderStatus==3">已完成</div>
 		</div>
 	</div>
 </template>
@@ -24,7 +28,8 @@
 	export default {
 		name:'submit-footer',
 		props:{
-			list:'',
+			price:'',
+			orderStatus:''
 		},
 		data(){
 			return {
@@ -35,32 +40,16 @@
 			zlist:function(){
 				return this.list
 			},
-			zzlist:function(){
-				let total = 0
-				let num = 0
-				if(this.zlist!=''){
-					this.zlist.forEach((item,i)=>{
-						total+=item.goods.shopGoodsPrice
-						num+=item.goods.shopGoodsNum
-					})
-				}
-				return {total:total,num:num};
-			}
 		},
 		methods:{
 			handleClick(){
 				this.show = true
-				this.$emit('pay',this.zzlist.total)
+				this.$emit('pay',this.price)
+			},
+			handelGuanClick(){
+				this.show = false
 			}
 		},
-		watch:{
-			list(){
-				console.log(this.list)
-			},
-			zlist(){
-				console.log(this.zlist)
-			}
-		}
 	}
 </script>
 <style lang="stylus" scoped>
@@ -128,6 +117,15 @@
 			color: #fff;
 			font-size: 0.18rem;
 			background: $bgColor;
+			float: left;
+			text-align: center;
+		.footer_right2
+			height:100%;
+			line-height: 0.6rem;
+			width: 1.3rem;
+			color: #fff;
+			font-size: 0.18rem;
+			background: #666;
 			float: left;
 			text-align: center;
 </style>

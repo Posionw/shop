@@ -6,7 +6,7 @@
 		    <swiper-slide
 		    	v-for="(item,index) in num"
 		    	:key="index">
-		    	<list-li :num ="index"></list-li>
+		    	<list-li :num ="index" ref="listli"></list-li>
 		    </swiper-slide>
 	  </swiper>
 	</div>
@@ -80,7 +80,7 @@
 	    	tab(){
 	    		this.swiper.slideTo(this.tab, 0, false)
 	    		// console.log(this.tab)
-	    	}
+	    	},
 	    }
 	}
 </script>

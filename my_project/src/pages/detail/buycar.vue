@@ -372,7 +372,14 @@
 						line-height: 0.2rem;
 						margin-top: 0.14rem;
 						margin-left: 0.15rem;
-						width: 2.52rem;
+						width: 2.2rem;
+						// background:pink;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						word-wrap: break-word;
+						-webkit-line-clamp: 1;
+						-webkit-box-orient: vertical;
+						display: -webkit-box; /*将对象作为弹性伸缩盒子模型显示*/
 					.top_price
 						height:0.2rem;
 						width: 2.52rem;
@@ -461,7 +468,7 @@
 						height:0.24rem;
 						width: 0.24rem;
 						background:  #EDEDED;
-						line-height: 0.26rem;
+						line-height: 0.24rem;
 						text-align: center;
 						border: 0.01rem solid #C9C9C9;
 						float: left;
@@ -478,7 +485,7 @@
 						height:0.24rem;
 						width: 0.24rem;
 						background:  #EDEDED;
-						line-height: 0.26rem;
+						line-height: 0.24rem;
 						text-align: center;
 						border: 0.01rem solid #C9C9C9;
 						float: left;

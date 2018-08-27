@@ -1,5 +1,5 @@
 <template>
-	<div style="height:100%;overflow: scroll;">
+	<div style="height:100%;overflow: scroll;-webkit-overflow-scrolling: touch;" ref="ui">
 		<mt-loadmore
 			:autoFill="autoFill"
 			:bottom-method="loadBottom"
@@ -57,8 +57,8 @@
 		    ...mapState({
 		      id:'id',
 		      tab:'tab',
-		      cid:'cid'
-		    })
+		      cid:'cid',
+		    }),
 		 },
 		methods:{
 			loadTop() {
@@ -97,15 +97,14 @@
 		watch:{
 	    	tab(){
 	    		if(this.tab==this.num){
-	    			if(this.z_list.length<1){
+	    			if(this.z_list.length<1){                  //判断左滑的时候不加载数据
 
 	    				this.getIndexData(this.id)
 	    			}
 	    		}
 	    	},
-	    	z_list(){
-	    	}
-	     }
+
+	     },
 	}
 </script>
 <style lang="stylus" scoped>
@@ -164,13 +163,13 @@
 					color: #353535;
 					line-height: 0.2rem;
 					height:0.2rem;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					word-wrap: break-word;
+					-webkit-line-clamp: 1;
+					-webkit-box-orient: vertical;
 					display: -webkit-box; /*将对象作为弹性伸缩盒子模型显示*/
-				    overflow: hidden;
 				    white-space: normal !important;
-				    text-overflow: ellipsis;
-				    word-wrap: break-word;
-				    -webkit-line-clamp: 1; /*限制在一个块元素显示的文本的行数*/
-				    -webkit-box-orient: vertical;
 				.card_price
 					height:0.2rem;
 					line-height: 0.2rem;
