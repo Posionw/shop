@@ -109,12 +109,12 @@
 		  	handlePayClick(price){
 		  		console.log(this.payState)
 		  		console.log(this.list.orderId)
-		  		// var that =this
-		  		// if(this.oid==0){
-		  		// 	 window.android.orderPay(that.payState,that.list.orderId);     //给安卓传参数
-		  		// }else{
-		  		// 	orderPay(that.payState,that.list.orderId)  					   //给ios传参数
-		  		// }
+		  		var that =this
+		  		if(this.oid==0){
+		  			 window.android.orderPay(that.payState,that.list.orderId);     //给安卓传参数
+		  		}else{
+		  			orderPay(that.payState,that.list.orderId)  					   //给ios传参数
+		  		}
 		  	},
 		},
 		mounted(){
